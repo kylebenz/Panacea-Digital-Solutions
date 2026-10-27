@@ -13,13 +13,18 @@ export const topics = {
 } as const;
 export type Topic = keyof typeof topics;
 
+export type CaptionCue = { start: number; end: number; text: string };
+
 type VideoMedia = {
-  /** Full video file. Captions are required whenever a file exists. */
+  /** Full video file. */
   src: string;
+  /** WebVTT captions file (required whenever a video file exists). */
   captions: string;
   poster: string;
   /** Optional short muted loop for desktop hover previews. */
   previewSrc?: string;
+  /** True while the file is a generated stand-in for the final video (O-05). */
+  placeholder?: boolean;
 };
 
 type VideoAsset = {
@@ -28,7 +33,9 @@ type VideoAsset = {
   fileType: "MP4";
   /** Poster art built in SVG until real files arrive (O-05). */
   art: { motif: StoryArtKind; caption: string };
-  media?: VideoMedia;
+  /** Caption script; scripts/portfolio-media.ts writes the .vtt from it. */
+  script: CaptionCue[];
+  media: VideoMedia;
 };
 
 type InfographicAsset = {
@@ -54,4 +61,19 @@ export type PortfolioItem = Base &
 
 export function formatLabel(item: PortfolioItem) {
   return `${item.ratio} · ${item.fileType}`;
+}
+
+export const mediaPaths = (slug: string) => ({
+  src: `/media/portfolio/${slug}.mp4`,
+  captions: `/media/portfolio/${slug}.vtt`,
+  poster: `/media/portfolio/${slug}-poster.webp`,
+});
+
+/** WebVTT text for a caption script. */
+export function toVtt(cues: CaptionCue[]) {
+  const ts = (s: number) =>
+    `00:00:${String(Math.floor(s)).padStart(2, "0")}.${String(Math.round((s % 1) * 1000)).padStart(3, "0")}`;
+  return ["WEBVTT", "", ...cues.flatMap((c, i) => [String(i + 1), `${ts(c.start)} --> ${ts(c.end)}`, c.text, ""])].join(
+    "\n",
+  );
 }

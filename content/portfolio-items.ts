@@ -1,4 +1,4 @@
-import type { PortfolioItem } from "@/lib/portfolio";
+import { mediaPaths, type PortfolioItem } from "@/lib/portfolio";
 
 /*
  * Concept Samples (brief 7G). Fictional work: each renders the "Concept
@@ -18,6 +18,13 @@ export const portfolioItems: PortfolioItem[] = [
     goal: "Introduce a service",
     topic: "service-introductions",
     art: { motif: "house", caption: "Planning home care for someone you love?" },
+    script: [
+      { start: 0, end: 3, text: "Planning home care for someone you love?" },
+      { start: 3, end: 8, text: "[Your business name] offers in-home support in [Your city or service area]." },
+      { start: 8, end: 12, text: "Here’s what a visit can include and how scheduling works." },
+      { start: 12, end: 15, text: "Send us a message to talk through your needs." },
+    ],
+    media: { ...mediaPaths("introducing-a-home-care-service"), placeholder: true },
   },
   {
     slug: "questions-before-choosing-home-care",
@@ -52,6 +59,13 @@ export const portfolioItems: PortfolioItem[] = [
     goal: "Answer a common question",
     topic: "common-questions",
     art: { motif: "question", caption: "A quick answer to a question we hear often." },
+    script: [
+      { start: 0, end: 3, text: "A quick answer to a question we hear often." },
+      { start: 3, end: 8, text: "“Do you accept new clients?”" },
+      { start: 8, end: 12, text: "Here’s how to check current availability at [Your business name]." },
+      { start: 12, end: 15, text: "Ask us at [Your phone or website]." },
+    ],
+    media: { ...mediaPaths("do-you-accept-new-clients"), placeholder: true },
   },
   {
     slug: "what-to-bring-to-your-first-appointment",
@@ -81,6 +95,14 @@ export const portfolioItems: PortfolioItem[] = [
     goal: "Explain a process",
     topic: "process-explainers",
     art: { motif: "calendar", caption: "Booking your first visit takes three steps." },
+    script: [
+      { start: 0, end: 3, text: "Booking your first visit takes three steps." },
+      { start: 3, end: 6, text: "One: choose a time at [Your booking link]." },
+      { start: 6, end: 9, text: "Two: complete the short intake form." },
+      { start: 9, end: 12, text: "Three: bring your photo ID and any forms we sent you." },
+      { start: 12, end: 15, text: "Questions first? Call [Your phone number]." },
+    ],
+    media: { ...mediaPaths("how-to-book-a-first-appointment"), placeholder: true },
   },
   {
     slug: "how-a-care-scheduling-app-works",
@@ -94,6 +116,13 @@ export const portfolioItems: PortfolioItem[] = [
     goal: "Introduce a service",
     topic: "service-introductions",
     art: { motif: "app", caption: "See every scheduled visit in one place." },
+    script: [
+      { start: 0, end: 3, text: "See every scheduled visit in one place." },
+      { start: 3, end: 8, text: "[Your app name] brings family schedules and reminders together." },
+      { start: 8, end: 12, text: "Add the people involved, then share one schedule." },
+      { start: 12, end: 15, text: "Learn more at [Your website]." },
+    ],
+    media: { ...mediaPaths("how-a-care-scheduling-app-works"), placeholder: true },
   },
   {
     slug: "our-intake-process-in-four-steps",

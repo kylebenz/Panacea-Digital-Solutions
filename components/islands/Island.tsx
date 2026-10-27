@@ -15,6 +15,8 @@ const registry = {
   "script-to-screen": lazy(() => import("@/components/interactive/ScriptToScreen")),
   "process-timeline": lazy(() => import("@/components/interactive/ProcessTimeline")),
   "audience-chips": lazy(() => import("@/components/interactive/AudienceChips")),
+  "portfolio-explorer": lazy(() => import("@/components/interactive/PortfolioExplorer")),
+  "revision-explainer": lazy(() => import("@/components/interactive/RevisionExplainer")),
 } as const;
 
 export type IslandName = keyof typeof registry;
@@ -29,7 +31,11 @@ export function Island({
   /** Static server render shown until the island loads. */
   children: ReactNode;
   /** Server-rendered nodes (e.g. SVG artwork) handed to the interactive version. */
-  slots?: { arts?: ReactNode[]; artMap?: Partial<Record<StoryArtKind, ReactNode>> };
+  slots?: {
+    arts?: ReactNode[];
+    artMap?: Partial<Record<StoryArtKind, ReactNode>>;
+    artBySlug?: Record<string, ReactNode>;
+  };
   rootMargin?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
