@@ -18,7 +18,6 @@ export default function robots(): MetadataRoute.Robots {
   }
   return {
     rules: { userAgent: "*", allow: "/", disallow: "/styleguide/" },
-    // Phase 7 adds app/sitemap.ts and the sitemap reference here.
-    host: site.url,
+    sitemap: new URL("/sitemap.xml", site.url).toString(),
   };
 }

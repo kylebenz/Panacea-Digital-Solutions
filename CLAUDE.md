@@ -69,6 +69,12 @@ to the register in `docs/phase-0-plan.md` §5. `npm run prelaunch` fails while a
 ## Engineering standards
 
 - After every phase: `npm run typecheck`, `npm run lint`, `npm run build`, then commit.
+- Launch gate: `npm run prelaunch` (build + checks in `scripts/prelaunch.ts`). It fails on any
+  `[VERIFY`, invalid promo, unpermitted client work, H1 count, chapter ids/order, broken in-page
+  links, build slates, hype words, emoji, "web design", bad metadata or structured data, and
+  warns on claim words. `PRELAUNCH_ALLOW_VERIFY=1` downgrades known `[VERIFY]` items to warnings.
+- e2e: `npm run build && ./scripts/serve.sh` (port 3100, `FORM_WEBHOOK_URL=dry-run`), then
+  `BASE_URL=http://localhost:3100 npx playwright test`.
 - Accessibility: WCAG 2.2 AA, axe zero violations; verdigris focus rings with offset;
   24px minimum targets; anchor jumps focus the chapter heading (`tabindex="-1"`).
 - Motion: `--ease-cut` easing, 180–600ms, stagger ≤ 60ms, wipes/mask reveals (not

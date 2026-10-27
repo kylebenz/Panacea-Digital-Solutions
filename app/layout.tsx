@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { site } from "@/lib/site";
+import { seo } from "@/content/seo";
+import { Analytics } from "@/components/layout/Analytics";
 import { SkipLinks } from "@/components/layout/SkipLinks";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -32,9 +34,22 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   // Guide §6 / brief §9 (verbatim).
-  title: "AI Healthcare Ad Videos & Infographics | Panacea Digital",
-  description:
-    "Create awareness for your healthcare business with AI-assisted promotional videos and healthcare infographics. Explore affordable monthly content packages.",
+  title: seo.title,
+  description: seo.description,
+  applicationName: site.name,
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    title: seo.title,
+    description: seo.description,
+    url: "/",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: seo.title,
+    description: seo.description,
+  },
 };
 
 export const viewport: Viewport = {
@@ -53,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <SiteFooter />
         <AnchorHandler />
+        <Analytics />
       </body>
     </html>
   );

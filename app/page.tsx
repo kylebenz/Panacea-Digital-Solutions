@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/chapters/Hero";
 import { SampleStrip } from "@/components/chapters/SampleStrip";
 import { Why } from "@/components/chapters/Why";
@@ -19,9 +21,14 @@ import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
  * The single page. Chapter order here must match `chapters` in
  * site.config.ts; prelaunch checks the two agree.
  */
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
 export default function HomePage() {
   return (
     <>
+      <JsonLd />
       <Hero />
       <SampleStrip />
       <Why />
