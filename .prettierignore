@@ -1,0 +1,7 @@
+.next
+node_modules
+docs/brand-guide.*
+BUILD_BRIEF.md
+screenshots
+test-results
+playwright-report

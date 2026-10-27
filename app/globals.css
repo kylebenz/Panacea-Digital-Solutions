@@ -1,0 +1,657 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens — "The Clinical Edit"
+   Contrast for every pair is recorded in docs/phase-0-plan.md §4.
+   ------------------------------------------------------------------ */
+
+@theme {
+  --color-*: initial;
+
+  --color-paper: #f5f1e8;
+  --color-paper-2: #ece6d9;
+  --color-ink: #111816;
+  --color-ink-2: #4a5552;
+  --color-verdigris: #2d5a4e;
+  --color-remedy: #e0552d;
+  --color-mist: #d6e2dc;
+  --color-line: rgb(17 24 22 / 0.12);
+
+  /* Dark-chapter companions (added at Checkpoint 1) */
+  --color-paper-dim: #b1b0a9;
+  --color-verdigris-bright: #7db8a6;
+  --color-ink-raised: #1b2421;
+  --color-line-strong: #7a8480;
+  --color-line-strong-on-ink: #787a75;
+  --color-line-on-ink: rgb(245 241 232 / 0.12);
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", monospace;
+
+  --ease-cut: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --radius-xs: 2px;
+  --radius-phone: 28px;
+  --radius-screen: 20px;
+}
+
+/* Tone-aware aliases: primitives use these so they adapt to the chapter
+   they sit in (paper, paper-2, or ink). */
+@theme inline {
+  --color-bg: var(--tone-bg);
+  --color-fg: var(--tone-fg);
+  --color-fg-muted: var(--tone-fg-muted);
+  --color-accent: var(--tone-accent);
+  --color-rule: var(--tone-line);
+  --color-rule-strong: var(--tone-line-strong);
+  --color-field: var(--tone-field);
+}
+
+:root {
+  --dur-1: 180ms;
+  --dur-2: 320ms;
+  --dur-3: 600ms;
+  --stagger: 60ms;
+
+  --page-max: 1360px;
+  --page-margin: clamp(1rem, 4vw, 3rem);
+  --gutter: clamp(1rem, 2vw, 1.5rem);
+  --chapter-pad: clamp(5rem, 10vw, 9rem);
+  --header-h: 4.5rem;
+  --header-h-condensed: 3.5rem;
+  --rail-gutter: 0px;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --rail-gutter: 3.5rem;
+  }
+}
+
+:root,
+[data-tone="paper"] {
+  --tone-bg: var(--color-paper);
+  --tone-fg: var(--color-ink);
+  --tone-fg-muted: var(--color-ink-2);
+  --tone-accent: var(--color-verdigris);
+  --tone-line: var(--color-line);
+  --tone-line-strong: var(--color-line-strong);
+  --tone-field: #fbf9f4;
+}
+
+[data-tone="paper-2"] {
+  --tone-bg: var(--color-paper-2);
+  --tone-fg: var(--color-ink);
+  --tone-fg-muted: var(--color-ink-2);
+  --tone-accent: var(--color-verdigris);
+  --tone-line: var(--color-line);
+  --tone-line-strong: var(--color-line-strong);
+  --tone-field: #fbf9f4;
+}
+
+[data-tone="ink"] {
+  --tone-bg: var(--color-ink);
+  --tone-fg: var(--color-paper);
+  --tone-fg-muted: var(--color-paper-dim);
+  --tone-accent: var(--color-verdigris-bright);
+  --tone-line: var(--color-line-on-ink);
+  --tone-line-strong: var(--color-line-strong-on-ink);
+  --tone-field: var(--color-ink-raised);
+}
+
+[data-tone] {
+  background-color: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-h-condensed) + 1rem);
+  }
+
+  body {
+    min-height: 100dvh;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-mist);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--tone-accent);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* Chapter headings receive programmatic focus after anchor jumps. */
+  [data-chapter-heading]:focus {
+    outline: none;
+  }
+  [data-chapter-heading]:focus-visible {
+    outline: 2px solid var(--tone-accent);
+    outline-offset: 6px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduced motion: instant, static final states everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Type scale
+   ------------------------------------------------------------------ */
+
+@utility text-display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5.2vw, 4.75rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+@utility text-display-l {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+@utility text-display-m {
+  font-family: var(--font-display);
+  font-size: clamp(1.625rem, 2.6vw, 2.375rem);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  font-weight: 350;
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+@utility text-h3 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.1875rem, 1.5vw, 1.375rem);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+@utility text-body-l {
+  font-size: clamp(1.0625rem, 1.2vw, 1.1875rem);
+  line-height: 1.55;
+}
+
+@utility text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@utility text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@utility text-mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------
+   Layout primitives
+   ------------------------------------------------------------------ */
+
+@utility page {
+  width: 100%;
+  max-width: calc(var(--page-max) + 2 * var(--page-margin) + var(--rail-gutter));
+  margin-inline: auto;
+  padding-left: var(--page-margin);
+  padding-right: calc(var(--page-margin) + var(--rail-gutter));
+}
+
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+@utility measure {
+  max-width: 66ch;
+}
+
+/* ------------------------------------------------------------------
+   Components that need full state matrices live here rather than in
+   utility strings, so /styleguide/ can force each state for review.
+   ------------------------------------------------------------------ */
+
+@layer components {
+  /* Buttons ------------------------------------------------------ */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-xs);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.005em;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    isolation: isolate;
+    overflow: hidden;
+    transition:
+      background-color var(--dur-1) var(--ease-cut),
+      color var(--dur-1) var(--ease-cut),
+      box-shadow var(--dur-1) var(--ease-cut),
+      transform var(--dur-1) var(--ease-cut);
+  }
+  .btn[aria-disabled="true"],
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+  .btn-sm {
+    min-height: 2.25rem;
+    padding: 0.4375rem 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .btn .btn-arrow {
+    transition: transform var(--dur-2) var(--ease-cut);
+  }
+
+  /* Primary: remedy fill, always ink text (white fails contrast). Hover
+     runs an ink "cut" bar along the bottom edge instead of darkening the
+     fill, which would push ink-on-remedy below AA. */
+  .btn-primary {
+    background-color: var(--color-remedy);
+    color: var(--color-ink);
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background-color: var(--color-ink);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-2) var(--ease-cut);
+    z-index: -1;
+  }
+  .btn-primary:where(:hover, [data-preview="hover"])::after {
+    transform: scaleX(1);
+  }
+  .btn:where(:hover, [data-preview="hover"]) .btn-arrow {
+    transform: translateX(3px);
+  }
+  .btn-primary:where(:active, [data-preview="active"]) {
+    transform: translateY(1px);
+    box-shadow: inset 0 0 0 2px var(--color-ink);
+  }
+
+  /* Secondary: hairline outline in the current tone. */
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--tone-fg);
+    box-shadow: inset 0 0 0 1px var(--tone-fg);
+  }
+  .btn-secondary:where(:hover, [data-preview="hover"]) {
+    background-color: var(--tone-field);
+    box-shadow: inset 0 0 0 1.5px var(--tone-fg);
+  }
+  .btn-secondary:where(:active, [data-preview="active"]) {
+    transform: translateY(1px);
+    box-shadow: inset 0 0 0 2px var(--tone-fg);
+  }
+
+  /* Ghost: text link with a measured underline. */
+  .btn-ghost {
+    min-height: 2.75rem;
+    padding-inline: 0.25rem;
+    background: transparent;
+    color: var(--tone-fg);
+    text-decoration: underline;
+    text-decoration-color: var(--tone-line-strong);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.35em;
+  }
+  .btn-ghost:where(:hover, [data-preview="hover"]) {
+    text-decoration-color: var(--tone-fg);
+    text-decoration-thickness: 2px;
+  }
+  .btn-ghost:where(:active, [data-preview="active"]) {
+    transform: translateY(1px);
+  }
+
+  .btn[data-preview="focus"] {
+    outline: 2px solid var(--tone-accent);
+    outline-offset: 3px;
+  }
+
+  /* Loading: a scrub bar runs along the bottom edge like a render
+     progress line. Label stays readable; aria-busy carries state. */
+  .btn[aria-busy="true"] {
+    cursor: progress;
+  }
+  .btn[aria-busy="true"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 35%;
+    background-color: currentColor;
+    animation: scrub 1.1s var(--ease-cut) infinite;
+  }
+  .btn-primary[aria-busy="true"]::after {
+    transform: scaleX(1);
+    opacity: 0.25;
+  }
+
+  /* Chips ------------------------------------------------------- */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    min-height: 1.75rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: var(--radius-xs);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    color: var(--tone-fg);
+    box-shadow: inset 0 0 0 1px var(--tone-line-strong);
+    background-color: transparent;
+  }
+  button.chip {
+    min-height: 2.25rem;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-1) var(--ease-cut),
+      color var(--dur-1) var(--ease-cut);
+  }
+  button.chip:where(:hover, [data-preview="hover"]) {
+    background-color: var(--tone-field);
+  }
+  .chip[aria-pressed="true"],
+  .chip[data-state="on"],
+  .chip[aria-selected="true"] {
+    background-color: var(--tone-fg);
+    color: var(--tone-bg);
+    box-shadow: inset 0 0 0 1px var(--tone-fg);
+  }
+
+  /* Form fields ------------------------------------------------- */
+  .field-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--tone-fg);
+  }
+  .field-hint {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--tone-fg-muted);
+  }
+  .field-control {
+    display: block;
+    width: 100%;
+    min-height: 2.875rem;
+    padding: 0.6875rem 0.875rem;
+    border-radius: var(--radius-xs);
+    background-color: var(--tone-field);
+    color: var(--tone-fg);
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.4;
+    box-shadow: inset 0 0 0 1px var(--tone-line-strong);
+    transition: box-shadow var(--dur-1) var(--ease-cut);
+    appearance: none;
+  }
+  .field-control::placeholder {
+    color: var(--tone-fg-muted);
+    opacity: 1;
+  }
+  .field-control:where(:hover, [data-preview="hover"]) {
+    box-shadow: inset 0 0 0 1.5px var(--tone-fg-muted);
+  }
+  .field-control:where(:focus-visible, [data-preview="focus"]) {
+    outline: 2px solid var(--tone-accent);
+    outline-offset: 2px;
+    box-shadow: inset 0 0 0 1.5px var(--tone-fg);
+  }
+  .field-control[aria-invalid="true"] {
+    box-shadow:
+      inset 0 0 0 1.5px var(--tone-fg),
+      inset 4px 0 0 0 var(--color-remedy);
+    padding-left: 1.125rem;
+  }
+  .field-control:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  textarea.field-control {
+    min-height: 8rem;
+    resize: vertical;
+  }
+  select.field-control {
+    padding-right: 2.5rem;
+    background-image:
+      linear-gradient(45deg, transparent 50%, currentColor 50%),
+      linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position:
+      calc(100% - 1.125rem) 52%,
+      calc(100% - 0.8125rem) 52%;
+    background-size: 0.3125rem 0.3125rem;
+    background-repeat: no-repeat;
+  }
+  .field-error {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    font-size: 0.8125rem;
+    line-height: 1.45;
+    color: var(--tone-fg);
+  }
+  .field-error::before {
+    content: "Error";
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.0625rem 0.3125rem;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-remedy);
+    color: var(--color-ink);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion vocabulary: frame wipes, mask reveals, leader-line draws.
+   ------------------------------------------------------------------ */
+
+@keyframes scrub {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(290%);
+  }
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes mask-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(0.35em);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: var(--path-length, 1);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes mask-down {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.anim-wipe {
+  animation: wipe-in var(--dur-3) var(--ease-cut) both;
+}
+.anim-mask-up {
+  animation: mask-up var(--dur-3) var(--ease-cut) both;
+}
+.anim-draw {
+  stroke-dasharray: var(--path-length, 1);
+  animation: draw-line var(--dur-3) var(--ease-cut) both;
+}
+
+/* ------------------------------------------------------------------
+   Chapters
+   ------------------------------------------------------------------ */
+
+.chapter {
+  position: relative;
+  scroll-margin-top: calc(var(--header-h-condensed) + 1rem);
+}
+
+/* Below-the-fold chapters skip rendering work until approached.
+   Anchor accuracy is handled in lib/wayfinding/navigate.ts. */
+.chapter[data-defer] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1100px;
+}
+
+.hairline-grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hairline-grid > div {
+  height: 100%;
+}
+.hairline-grid span {
+  display: block;
+  height: 100%;
+  box-shadow:
+    inset 1px 0 0 0 var(--tone-line),
+    inset -1px 0 0 0 var(--tone-line);
+  opacity: 0.6;
+}
+
+/* Mobile menu: full-screen ink sheet with a staggered mask reveal. */
+.mobile-menu[data-state="open"] {
+  animation: mask-down var(--dur-3) var(--ease-cut) both;
+}
+.mobile-menu[data-state="closed"] {
+  animation: fade-out var(--dur-1) var(--ease-cut) both;
+}
+.mobile-menu[data-state="open"] .mobile-menu-item {
+  animation: mask-up var(--dur-3) var(--ease-cut) both;
+  animation-delay: calc(140ms + var(--i, 0) * 40ms);
+}
+
+/* Chapter rail tooltips: shown on hover/focus, dismissible with Escape. */
+.rail-tick:hover .rail-tip,
+.rail-tick:focus-visible .rail-tip {
+  opacity: 1;
+  translate: -2px 0;
+}
+.chapter-rail[data-tips-suppressed] .rail-tip {
+  opacity: 0 !important;
+}
