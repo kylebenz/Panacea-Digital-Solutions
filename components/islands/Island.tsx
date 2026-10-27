@@ -1,5 +1,6 @@
 "use client";
 
+import type { StoryArtKind } from "@/content/hero-stage";
 import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
 
 /*
@@ -11,6 +12,9 @@ import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from "rea
 const registry = {
   "ad-anatomy": lazy(() => import("@/components/interactive/AdAnatomyPlayer")),
   "infographic-anatomy": lazy(() => import("@/components/interactive/InfographicAnatomy")),
+  "script-to-screen": lazy(() => import("@/components/interactive/ScriptToScreen")),
+  "process-timeline": lazy(() => import("@/components/interactive/ProcessTimeline")),
+  "audience-chips": lazy(() => import("@/components/interactive/AudienceChips")),
 } as const;
 
 export type IslandName = keyof typeof registry;
@@ -25,7 +29,7 @@ export function Island({
   /** Static server render shown until the island loads. */
   children: ReactNode;
   /** Server-rendered nodes (e.g. SVG artwork) handed to the interactive version. */
-  slots?: { arts?: ReactNode[] };
+  slots?: { arts?: ReactNode[]; artMap?: Partial<Record<StoryArtKind, ReactNode>> };
   rootMargin?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
