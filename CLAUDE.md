@@ -80,7 +80,7 @@ to the register in `docs/phase-0-plan.md` §5. `npm run prelaunch` fails while a
   `SITE_ENV=production`).
 - Fonts are trimmed, self-hosted files in `app/fonts/` (`next/font/local`); regenerate per
   `app/fonts/README.md` if a new weight is needed.
-- Accessibility: WCAG 2.2 AA, axe zero violations; verdigris focus rings with offset;
+- Accessibility: WCAG 2.2 AA, axe zero violations; brand-teal focus rings (aqua on ink) with offset;
   24px minimum targets; anchor jumps focus the chapter heading (`tabindex="-1"`).
 - Motion: `--ease-cut` easing, 180–600ms, stagger ≤ 60ms, wipes/mask reveals (not
   fade-ups), only the hero stage loops; `prefers-reduced-motion` → static final states.

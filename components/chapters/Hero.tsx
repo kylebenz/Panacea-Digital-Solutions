@@ -17,7 +17,7 @@ export function Hero() {
       <div className="page grid-12 items-center gap-y-12">
         <div className="col-span-12 lg:col-span-6 xl:col-span-6">
           <ChapterMarker number="00" label="Opening" />
-          <p className="text-mono mt-10 text-verdigris">{hero.eyebrow}</p>
+          <p className="text-mono mt-10 text-teal">{hero.eyebrow}</p>
           <h1 id="top-title" tabIndex={-1} data-chapter-heading="" className="text-display-xl mt-4 max-w-[17ch]">
             {hero.title}
           </h1>

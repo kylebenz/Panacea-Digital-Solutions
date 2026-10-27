@@ -1,26 +1,25 @@
 import { cn } from "@/lib/cn";
 
 /*
- * Placeholder monogram: a "P" built from a 9:16 frame (video) and a square
- * (infographic). Deliberately avoids any medical symbol (brief 3.6).
+ * The Panacea mark (supplied logo): a gradient "P" with pixel squares.
+ * Raster with transparency, extracted from assets/brand/panacea-logo-source.webp
+ * (see assets/brand/README.md). Decorative by default; pass `title` when the
+ * mark stands alone.
  */
 export function Monogram({ className, title }: { className?: string; title?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 30"
-      className={cn("h-7 w-auto", className)}
-      role={title ? "img" : undefined}
+    // eslint-disable-next-line @next/next/no-img-element -- tiny static asset; next/image would add client JS
+    <img
+      src="/brand/panacea-mark-96.webp"
+      srcSet="/brand/panacea-mark-64.webp 52w, /brand/panacea-mark-96.webp 79w, /brand/panacea-mark-144.webp 118w"
+      sizes="40px"
+      width={79}
+      height={96}
+      alt={title ?? ""}
       aria-hidden={title ? undefined : true}
-      aria-label={title}
-      fill="none"
-    >
-      {/* 9:16 frame — the stem */}
-      <rect x="3" y="3" width="13.5" height="24" rx="1.5" stroke="currentColor" strokeWidth="2" />
-      {/* Square — the bowl */}
-      <rect x="16.5" y="3" width="12" height="12" fill="var(--color-verdigris)" />
-      <rect x="16.5" y="3" width="12" height="12" stroke="currentColor" strokeWidth="2" />
-      {/* Playhead notch */}
-      <rect x="6" y="22.25" width="7.5" height="1.75" fill="var(--color-remedy)" />
-    </svg>
+      decoding="async"
+      className={cn("h-9 w-auto select-none", className)}
+      draggable={false}
+    />
   );
 }

@@ -117,6 +117,11 @@ Topic filter: Service introductions · Common questions · Process explainers ·
 
 ## 4. Token set with measured contrast (WCAG 2.x relative luminance)
 
+> **Revised after launch prep: logo palette.** The supplied logo replaced the
+> verdigris/green-black palette below. Current tokens, roles, and every contrast
+> pair live in `lib/tokens.ts` (computed live on `/styleguide/`) and
+> `assets/brand/README.md`. All pairs pass AA; the table below is kept as history.
+
 ### Colour
 | Token | Value | Use |
 |---|---|---|
@@ -223,7 +228,7 @@ Topic filter: Service introductions · Common questions · Process explainers ·
 | O-01 | Production domain (drives `metadataBase`, canonical, sitemap, OG URLs) |
 | O-02 | Promotion: regular prices, start/end dates, terms. Promo stays **off** until all four exist |
 | O-03 | Whether Growth may be called "most popular" (not shown unless verified) |
-| O-04 | Real logo / official colours / fonts (placeholder wordmark + monogram until supplied) |
+| O-04 | Logo supplied and in use (raster). Open: vector logo; official fonts, if any |
 | O-05 | Portfolio: final video files, posters, and `.vtt` captions to replace placeholders; any client work needs written permission (`clientName`, `approvedAt`) |
 | O-06 | `FORM_WEBHOOK_URL` destination (e.g. GoHighLevel inbound webhook or email service) |
 | O-07 | Analytics: Plausible domain; whether GA4 is wanted (requires consent banner) |

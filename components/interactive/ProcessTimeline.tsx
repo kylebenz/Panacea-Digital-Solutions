@@ -114,7 +114,7 @@ function Timeline() {
                   className={cn(
                     "group relative flex h-28 min-w-0 flex-col justify-between overflow-hidden rounded-t-xs px-5 pt-4 pb-3 text-left transition-colors duration-[var(--dur-1)]",
                     i === active
-                      ? "bg-ink-raised shadow-[inset_0_3px_0_var(--color-remedy)]"
+                      ? "bg-ink-raised shadow-[inset_0_3px_0_var(--color-aqua)]"
                       : "bg-ink-raised/60 shadow-[inset_0_2px_0_var(--tone-line-strong)] hover:bg-ink-raised",
                   )}
                 >

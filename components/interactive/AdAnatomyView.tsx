@@ -121,7 +121,7 @@ export function AdAnatomyView({ position, mode, arts, trackRef, trackProps, thum
                     className={cn(
                       "text-mono flex h-11 items-center truncate rounded-xs px-2 text-[0.6875rem] transition-colors duration-[var(--dur-1)]",
                       active
-                        ? "bg-verdigris-bright text-ink"
+                        ? "bg-aqua text-ink"
                         : "bg-ink-raised text-paper shadow-[inset_0_0_0_1px_var(--tone-line-strong)]",
                     )}
                   >
@@ -139,7 +139,7 @@ export function AdAnatomyView({ position, mode, arts, trackRef, trackProps, thum
             </div>
             <div
               aria-hidden="true"
-              className="text-mono mt-1 flex h-7 items-center rounded-xs bg-verdigris/45 px-2 text-[0.6875rem] text-paper"
+              className="text-mono mt-1 flex h-7 items-center rounded-xs bg-teal/45 px-2 text-[0.6875rem] text-paper"
             >
               {anatomy.captions.name}
             </div>
@@ -166,14 +166,14 @@ export function AdAnatomyView({ position, mode, arts, trackRef, trackProps, thum
 
         {mode === "interactive" ? (
           <div className="mt-8 grid gap-4">
-            <div className="border-l-2 border-remedy pl-5">
+            <div className="border-l-2 border-accent pl-5">
               <p className="text-mono text-fg-muted">
                 {formatTimecode(segment.start).slice(3)}–{formatTimecode(segment.end).slice(3)}
               </p>
               <p className="text-h3 mt-1">{segment.name}</p>
               <p className="measure mt-2 text-fg-muted">{segment.note}</p>
             </div>
-            <p className="measure text-small border-l-2 border-verdigris-bright pl-5 text-fg-muted">
+            <p className="measure text-small border-l-2 border-aqua pl-5 text-fg-muted">
               <span className="font-semibold text-fg">{anatomy.captions.name}.</span> {anatomy.captions.note}
             </p>
           </div>

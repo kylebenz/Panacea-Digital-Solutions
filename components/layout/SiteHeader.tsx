@@ -29,7 +29,8 @@ export function SiteHeader() {
       data-condensed={condensed || undefined}
       className={cn(
         "sticky top-0 z-40 border-b transition-[border-color] duration-[var(--dur-2)] ease-[var(--ease-cut)]",
-        condensed ? "border-rule" : "border-transparent",
+        // Condensed: a hairline in the logo gradient under a soft rule.
+        condensed ? "header-hairline border-rule" : "border-transparent",
       )}
     >
       <div
@@ -75,7 +76,7 @@ export function SiteHeader() {
                     <span
                       aria-hidden="true"
                       className={cn(
-                        "absolute inset-x-3 bottom-1 h-[2px] origin-left bg-remedy transition-transform duration-[var(--dur-2)] ease-[var(--ease-cut)]",
+                        "bg-brand-gradient absolute inset-x-3 bottom-1 h-[2px] origin-left transition-transform duration-[var(--dur-2)] ease-[var(--ease-cut)]",
                         current ? "scale-x-100" : "scale-x-0",
                       )}
                     />

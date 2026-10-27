@@ -30,7 +30,7 @@ export function StepProgress({ step, total }: { step: number; total: number }) {
             <span
               className={cn(
                 "block h-[3px] rounded-full transition-colors duration-[var(--dur-2)]",
-                i < step ? "bg-verdigris-bright" : i === step ? "bg-remedy" : "bg-rule-strong",
+                i < step ? "bg-accent" : i === step ? "bg-brand-gradient" : "bg-rule-strong",
               )}
             />
             <span className={cn("text-mono text-[0.625rem]", i === step ? "text-fg" : "text-fg-muted")}>{s.title}</span>

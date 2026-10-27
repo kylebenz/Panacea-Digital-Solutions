@@ -48,7 +48,7 @@ export function SampleArt({ item, className }: { item: PortfolioItem; className?
       aria-hidden="true"
     >
       <div className={cn("flex h-full flex-col p-[8%]", item.ratio === "1:1" ? "bg-mist" : "bg-paper")}>
-        <span className="text-mono text-[clamp(0.5rem,4cqi,0.75rem)] text-verdigris">{item.art.kicker}</span>
+        <span className="text-mono text-[clamp(0.5rem,4cqi,0.75rem)] text-teal">{item.art.kicker}</span>
         <span className="font-display mt-[3%] text-[clamp(0.875rem,7.6cqi,1.75rem)] leading-[1.1]">{item.title}</span>
         <ol className="mt-auto grid gap-[2.5cqi]">
           {item.art.items.map((line, i) => (

@@ -85,7 +85,7 @@ export default function InfographicAnatomy() {
               points={leader.points}
               pathLength={1}
               fill="none"
-              stroke="var(--color-verdigris)"
+              stroke="var(--color-teal)"
               strokeWidth="1.5"
               className="anim-draw"
             />

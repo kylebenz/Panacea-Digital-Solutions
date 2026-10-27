@@ -75,7 +75,7 @@ export default function MobileMenuDialog({
                       aria-current={current ? "location" : undefined}
                       className="flex min-h-12 items-baseline gap-4 py-2.5 no-underline"
                     >
-                      <span className={cn("text-mono w-7 shrink-0", current ? "text-remedy" : "text-fg-muted")}>
+                      <span className={cn("text-mono w-7 shrink-0", current ? "text-accent" : "text-fg-muted")}>
                         {chapter.number}
                       </span>
                       <span className="font-display flex-1 text-[1.5rem] leading-tight">{chapter.label}</span>

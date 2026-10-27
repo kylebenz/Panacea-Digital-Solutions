@@ -6,7 +6,7 @@ export function ChapterMarker({ number, label, className }: { number: string; la
   return (
     <p className={cn("text-mono flex items-center gap-3 text-fg-muted", className)}>
       <span aria-hidden="true" className="relative inline-block h-3 w-[0.42rem] shrink-0 border border-current">
-        <span className="absolute inset-x-0 bottom-0 h-[2px] bg-remedy" />
+        <span className="absolute inset-x-0 bottom-0 h-[2px] bg-accent" />
       </span>
       <span>
         <span className="text-fg">CH {number}</span>

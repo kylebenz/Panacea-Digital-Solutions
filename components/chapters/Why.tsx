@@ -15,11 +15,11 @@ export function Why() {
           if (!("step" in part)) return <span key={i}>{part.text}</span>;
           const n = steps.indexOf(part) + 1;
           return (
-            <span key={i} className="underline decoration-verdigris decoration-1 underline-offset-[0.2em]">
+            <span key={i} className="underline decoration-teal decoration-1 underline-offset-[0.2em]">
               {part.text}
               <sup
                 aria-hidden="true"
-                className="ml-0.5 align-super font-mono text-[0.75rem] font-medium tracking-normal text-verdigris"
+                className="ml-0.5 align-super font-mono text-[0.75rem] font-medium tracking-normal text-teal"
               >
                 {String(n).padStart(2, "0")}
               </sup>
@@ -32,7 +32,7 @@ export function Why() {
         {steps.map((part, i) => (
           <li key={part.step} className="relative pt-4">
             <span className="absolute -top-px left-0 h-3 w-px bg-rule-strong" />
-            <span className="text-mono block text-verdigris">{String(i + 1).padStart(2, "0")}</span>
+            <span className="text-mono block text-teal">{String(i + 1).padStart(2, "0")}</span>
             <span className="text-mono mt-1 block text-fg">{part.step}</span>
           </li>
         ))}

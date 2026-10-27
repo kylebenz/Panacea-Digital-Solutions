@@ -7,7 +7,7 @@ type Side = "included" | "separate";
 export function RevisionSide({ side }: { side: Side }) {
   const data = pricing.revision[side];
   return (
-    <div className={side === "included" ? "border-l-2 border-verdigris pl-5" : "border-l-2 border-remedy pl-5"}>
+    <div className={side === "included" ? "border-l-2 border-teal pl-5" : "border-l-2 border-remedy pl-5"}>
       <p className="text-h3">{data.label}</p>
       <p className="measure mt-2 text-fg-muted">{data.definition}</p>
       <p className="text-mono mt-5 text-fg-muted">

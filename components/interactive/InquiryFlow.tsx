@@ -145,7 +145,7 @@ export default function InquiryFlow() {
 
   if (status === "sent") {
     return (
-      <div className="anim-wipe border-l-2 border-verdigris-bright py-2 pl-6">
+      <div className="anim-wipe border-l-2 border-aqua py-2 pl-6">
         <p className="text-mono text-fg-muted">{contact.stepLabel(TOTAL, TOTAL)} · Sent</p>
         <h3 ref={outcomeRef} tabIndex={-1} className="text-display-m mt-3 outline-none">
           {contact.success.title}

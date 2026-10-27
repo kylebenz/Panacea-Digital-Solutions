@@ -36,7 +36,7 @@ export function MotionSamples() {
               ) : null}
               {sample.key === "draw" ? (
                 <div className="absolute inset-4">
-                  <LeaderLine from={[12, 70]} elbow={[45, 25]} to={[88, 25]} draw className="text-verdigris" />
+                  <LeaderLine from={[12, 70]} elbow={[45, 25]} to={[88, 25]} draw className="text-teal" />
                   <Callout n={1} className="absolute top-[70%] left-[12%] -translate-x-1/2 -translate-y-1/2" />
                 </div>
               ) : null}

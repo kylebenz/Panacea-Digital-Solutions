@@ -192,9 +192,9 @@ export function StoryboardStage({ arts, thumbs }: { arts: ReactNode[]; thumbs: R
         </PhoneFrame>
 
         {/* The infographic card builds itself from the same brief. */}
-        <div className="absolute bottom-[36%] left-0 w-[min(15.5rem,58%)] border border-line-strong bg-paper p-4 text-ink shadow-[0_18px_40px_-24px_rgb(17_24_22/0.55)] sm:p-5">
+        <div className="absolute bottom-[36%] left-0 w-[min(15.5rem,58%)] border border-line-strong bg-paper p-4 text-ink shadow-[0_18px_40px_-24px_rgb(11_29_38/0.55)] sm:p-5">
           <RegistrationMarks />
-          <p className="text-mono text-[0.625rem] text-verdigris">{card.kicker}</p>
+          <p className="text-mono text-[0.625rem] text-teal">{card.kicker}</p>
           <p
             className="font-display mt-2 text-[1.0625rem] leading-[1.15] transition-[clip-path] duration-[var(--dur-3)] ease-[var(--ease-cut)] sm:text-[1.1875rem]"
             style={{ clipPath: built >= 1 ? "inset(0 0 0 0)" : "inset(0 100% 0 0)" }}
@@ -213,7 +213,7 @@ export function StoryboardStage({ arts, thumbs }: { arts: ReactNode[]; thumbs: R
                     className="h-6 w-6 text-[0.625rem] transition-colors duration-[var(--dur-2)]"
                   />
                   <span
-                    className="leader-in h-px w-4 shrink-0 bg-verdigris"
+                    className="leader-in h-px w-4 shrink-0 bg-teal"
                     style={{ transform: on ? "scaleX(1)" : "scaleX(0)" }}
                   />
                   <span

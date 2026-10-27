@@ -30,7 +30,7 @@ export function AdVideos() {
               key={item.label}
               className="reveal-wipe grid grid-cols-[3rem_1fr] items-baseline gap-x-4 border-b border-rule py-4 sm:grid-cols-[3rem_9rem_1fr]"
             >
-              <span className="text-mono text-remedy">{String(i + 1).padStart(2, "0")}</span>
+              <span className="text-mono text-accent">{String(i + 1).padStart(2, "0")}</span>
               <span className="text-mono hidden text-fg-muted sm:block">{item.label}</span>
               <span className="text-body-l">{item.text}</span>
             </li>
@@ -59,7 +59,7 @@ export function AdVideos() {
               </li>
             ))}
           </ul>
-          <p className="measure mt-8 border-l-2 border-verdigris-bright pl-5 text-fg-muted">{supports.caveat}</p>
+          <p className="measure mt-8 border-l-2 border-aqua pl-5 text-fg-muted">{supports.caveat}</p>
         </div>
       </div>
 

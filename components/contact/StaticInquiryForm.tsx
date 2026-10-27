@@ -112,7 +112,7 @@ export function StaticOutcomes() {
         <div
           key={p.id}
           id={p.id}
-          className="inquiry-outcome mb-10 border-l-2 border-verdigris-bright py-2 pl-5"
+          className="inquiry-outcome mb-10 border-l-2 border-aqua py-2 pl-5"
           tabIndex={-1}
         >
           <p className="text-h3">{p.title}</p>

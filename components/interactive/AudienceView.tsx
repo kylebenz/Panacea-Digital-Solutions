@@ -24,7 +24,7 @@ export function AudienceList() {
 export function AudienceResponse({ id, children }: { id: string; children?: ReactNode }) {
   const a = whoWeHelp.audiences.find((x) => x.id === id)!;
   return (
-    <div className="relative border-l-2 border-remedy pl-6">
+    <div className="relative border-l-2 border-accent pl-6">
       <p className="text-mono text-fg-muted">{a.name}</p>
       <p className="text-display-m mt-3 max-w-[30ch]">{a.line}</p>
       <Button href={a.link.href} variant="ghost" arrow className="mt-5 -ml-1">

@@ -8,16 +8,16 @@ import type { StoryArtKind } from "@/content/hero-stage";
  */
 
 const backgrounds: Record<StoryArtKind, [string, string]> = {
-  house: ["#1b2421", "#24453c"],
-  talk: ["#1b2421", "#1f3a33"],
-  path: ["#162320", "#2d5a4e"],
-  message: ["#1b2421", "#1b2421"],
-  calendar: ["#1b2421", "#24453c"],
-  app: ["#162320", "#1f3a33"],
-  question: ["#1b2421", "#2d5a4e"],
+  house: ["#132a35", "#0f4256"],
+  talk: ["#132a35", "#123747"],
+  path: ["#0f2430", "#046081"],
+  message: ["#132a35", "#132a35"],
+  calendar: ["#132a35", "#0f4256"],
+  app: ["#0f2430", "#123747"],
+  question: ["#132a35", "#046081"],
 };
 
-const stroke = "var(--color-verdigris-bright)";
+const stroke = "var(--color-aqua)";
 const mist = "var(--color-mist)";
 const paper = "var(--color-paper)";
 const remedy = "var(--color-remedy)";
@@ -74,12 +74,12 @@ function Talk() {
       <g className="story-build">
         <rect x="10" y="44" width="52" height="28" rx="6" fill={mist} />
         <path d="M20 72v8l8-8z" fill={mist} />
-        <Lines x={17} y={52} widths={[36, 28, 20]} color="#4a5552" />
+        <Lines x={17} y={52} widths={[36, 28, 20]} color="#47565d" />
       </g>
       <g className="story-build" style={{ animationDelay: "900ms" }}>
         <rect x="28" y="88" width="52" height="26" rx="6" fill={stroke} />
         <path d="M70 114v8l-8-8z" fill={stroke} />
-        <Lines x={35} y={96} widths={[34, 24]} color="#111816" />
+        <Lines x={35} y={96} widths={[34, 24]} color="#0b1d26" />
       </g>
     </>
   );
@@ -109,7 +109,7 @@ function PathArt() {
             cx={x}
             cy={y}
             r="8"
-            fill={i === 2 ? remedy : "#111816"}
+            fill={i === 2 ? remedy : "#0b1d26"}
             stroke={i === 2 ? remedy : stroke}
             strokeWidth="1.25"
           />
@@ -117,7 +117,7 @@ function PathArt() {
             x={x}
             y={y + 2.6}
             textAnchor="middle"
-            fill={i === 2 ? "#111816" : paper}
+            fill={i === 2 ? "#0b1d26" : paper}
             style={{ fontFamily: "var(--font-mono)", fontSize: "7.5px", fontWeight: 600 }}
           >
             {i + 1}
@@ -133,13 +133,13 @@ function Message() {
     <>
       <g className="story-build">
         <rect x="12" y="50" width="66" height="16" rx="2" fill={paper} />
-        <rect x="16" y="54" width="8" height="8" fill="#2d5a4e" />
+        <rect x="16" y="54" width="8" height="8" fill="#046081" />
         <text
           x="28"
           y="60.2"
           textLength="46"
           lengthAdjust="spacingAndGlyphs"
-          fill="#111816"
+          fill="#0b1d26"
           style={{ fontFamily: "var(--font-mono)", fontSize: "4.6px", fontWeight: 600 }}
         >
           SAMPLE HOME CARE
@@ -151,7 +151,7 @@ function Message() {
       </g>
       <g className="story-build" style={{ animationDelay: "800ms" }}>
         <circle cx="68" cy="116" r="7" fill={remedy} />
-        <path d="M64.5 116h6m-2.5-3 3 3-3 3" fill="none" stroke="#111816" strokeWidth="1.3" />
+        <path d="M64.5 116h6m-2.5-3 3 3-3 3" fill="none" stroke="#0b1d26" strokeWidth="1.3" />
       </g>
     </>
   );
@@ -204,7 +204,7 @@ function App() {
             strokeWidth="1"
           />
           <rect x="31" y={55 + i * 20} width="8" height="4" rx="1" fill={i === 1 ? remedy : dim} />
-          <rect x="42" y={55 + i * 20} width="16" height="2" rx="1" fill={i === 1 ? "#4a5552" : dim} />
+          <rect x="42" y={55 + i * 20} width="16" height="2" rx="1" fill={i === 1 ? "#47565d" : dim} />
         </g>
       ))}
     </>

@@ -5,7 +5,7 @@ export function ConceptBadge({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "text-mono inline-flex items-center gap-1.5 rounded-xs bg-verdigris px-2 py-1 text-paper",
+        "text-mono inline-flex items-center gap-1.5 rounded-xs bg-teal px-2 py-1 text-paper",
         className,
       )}
     >

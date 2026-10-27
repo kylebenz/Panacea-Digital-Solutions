@@ -1,8 +1,8 @@
 import { cn } from "@/lib/cn";
 
 /*
- * Placeholder SVG wordmark until a real logo is supplied (O-04).
- * textLength pins the width so the mark doesn't shift while fonts swap.
+ * Typeset wordmark beside the supplied mark: PANACEA in ink, the subline in
+ * the brand teal. textLength pins the width so it doesn't shift while fonts swap.
  */
 export function Wordmark({ className, subline = true }: { className?: string; subline?: boolean }) {
   return (
@@ -30,6 +30,7 @@ export function Wordmark({ className, subline = true }: { className?: string; su
         <text
           x="0.5"
           y="30"
+          fill="var(--tone-accent)"
           textLength="118"
           lengthAdjust="spacing"
           style={{

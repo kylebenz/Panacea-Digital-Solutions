@@ -428,14 +428,14 @@ export default function StyleguidePage() {
               caption="One clear message per frame."
               progress={0.3}
             >
-              <div className="absolute inset-0 bg-[linear-gradient(160deg,var(--color-verdigris)_0%,var(--color-ink-raised)_70%)]" />
+              <div className="absolute inset-0 bg-[linear-gradient(160deg,var(--color-teal)_0%,var(--color-ink-raised)_70%)]" />
             </PhoneFrame>
           </div>
           <div>
             <SubHead>Infographic frame · 4:5</SubHead>
             <InfographicFrame ratio="4:5">
               <div className="grid h-full content-start gap-3 bg-mist p-5">
-                <p className="text-mono text-verdigris">Concept</p>
+                <p className="text-mono text-teal">Concept</p>
                 <p className="font-display text-xl leading-tight">
                   Questions to ask before choosing a home care provider
                 </p>
@@ -517,7 +517,7 @@ export default function StyleguidePage() {
             <p className="text-mono absolute bottom-3 left-3 text-fg-muted">Registration marks</p>
           </div>
           <div className="relative h-48 border border-rule-strong bg-paper">
-            <LeaderLine from={[15, 75]} elbow={[50, 30]} to={[85, 30]} className="text-verdigris" />
+            <LeaderLine from={[15, 75]} elbow={[50, 30]} to={[85, 30]} className="text-teal" />
             <Callout n={2} className="absolute top-[75%] left-[15%] -translate-x-1/2 -translate-y-1/2" />
             <p className="text-mono absolute top-[30%] right-[15%] -translate-y-[130%] text-fg-muted">Leader line</p>
           </div>

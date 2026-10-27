@@ -86,7 +86,7 @@ export function Analytics() {
         <section
           data-tone="paper"
           aria-label={consent.label}
-          className="fixed inset-x-3 bottom-3 z-40 border border-rule-strong p-4 shadow-[0_18px_40px_-24px_rgb(17_24_22/0.55)] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-md"
+          className="fixed inset-x-3 bottom-3 z-40 border border-rule-strong p-4 shadow-[0_18px_40px_-24px_rgb(11_29_38/0.55)] sm:inset-x-auto sm:right-6 sm:bottom-6 sm:max-w-md"
         >
           <p className="text-small">
             {consent.body}{" "}

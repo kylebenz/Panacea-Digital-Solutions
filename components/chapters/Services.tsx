@@ -41,7 +41,7 @@ function VideoVisual() {
               </span>
             ))}
           </div>
-          <div className="text-mono mt-1 truncate rounded-xs bg-verdigris/40 px-2 py-1 text-[0.625rem]">Captions</div>
+          <div className="text-mono mt-1 truncate rounded-xs bg-teal/40 px-2 py-1 text-[0.625rem]">Captions</div>
           <span className="absolute -top-2 -bottom-2 left-[34%] w-[2px] bg-remedy">
             <span className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-remedy" />
           </span>
@@ -53,7 +53,7 @@ function VideoVisual() {
 
 function DiagramVisual() {
   const blocks = ["h-7", "h-14", "h-6"];
-  const fills = ["bg-ink/80", "bg-paper-2", "bg-verdigris"];
+  const fills = ["bg-ink/80", "bg-paper-2", "bg-teal"];
   const last = services.infographic.callouts.length - 1;
   return (
     <div className="grid grid-cols-[minmax(0,8.5rem)_1fr]" aria-hidden="true">
@@ -72,7 +72,7 @@ function DiagramVisual() {
             <div className={cn(blocks[i], fills[i], "rounded-[2px]")} />
           </div>
           <div className="flex items-center gap-2 py-1.5">
-            <span className="h-px flex-1 bg-verdigris" />
+            <span className="h-px flex-1 bg-teal" />
             <Callout n={i + 1} className="h-6 w-6 text-[0.625rem]" />
             <span className="text-mono w-[7.5rem] text-ink">{label}</span>
           </div>

@@ -18,7 +18,7 @@ const frameSegments: SegmentKey[] = ["hook", "message", "message", "cta"];
 const segClass = (seg: SegmentKey, active: SegmentKey | null) =>
   cn(
     "transition-[background-color,box-shadow] duration-[var(--dur-1)]",
-    active === seg && "bg-mist/70 shadow-[inset_3px_0_0_var(--color-remedy)]",
+    active === seg && "bg-mist/70 shadow-[inset_3px_0_0_var(--color-teal)]",
   );
 
 type ViewProps = {
@@ -96,7 +96,7 @@ export function OutlineView({ concept, active, onSegment }: ViewProps) {
       >
         {concept.outline.blocks.map((block, i) => (
           <li key={block} className="flex gap-2.5 border-t border-line pt-2 text-small leading-snug">
-            <span className="font-mono text-[0.6875rem] font-semibold text-verdigris">
+            <span className="font-mono text-[0.6875rem] font-semibold text-teal">
               {String(i + 1).padStart(2, "0")}
             </span>
             <span>{block}</span>
@@ -107,7 +107,7 @@ export function OutlineView({ concept, active, onSegment }: ViewProps) {
         {...hoverProps("cta", onSegment)}
         className={cn(
           "-mx-1 mt-3 bg-ink px-2 py-2 text-[0.8125rem] font-semibold text-paper",
-          active === "cta" && "shadow-[inset_3px_0_0_var(--color-remedy)]",
+          active === "cta" && "shadow-[inset_3px_0_0_var(--color-teal)]",
         )}
       >
         {concept.script.cta}

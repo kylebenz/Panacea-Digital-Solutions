@@ -26,12 +26,12 @@ export const hotspots: Array<{ left: number; top: number }> = [
 function HouseIllustration() {
   return (
     <svg viewBox="0 0 64 48" className="h-full w-full" aria-hidden="true" fill="none">
-      <path d="M4 44h56" stroke="var(--color-verdigris)" strokeWidth="1.5" />
-      <path d="M12 24 32 8l20 16" stroke="var(--color-verdigris)" strokeWidth="1.5" strokeLinejoin="round" />
-      <rect x="16" y="22" width="32" height="22" stroke="var(--color-verdigris)" strokeWidth="1.5" />
+      <path d="M4 44h56" stroke="var(--color-teal)" strokeWidth="1.5" />
+      <path d="M12 24 32 8l20 16" stroke="var(--color-teal)" strokeWidth="1.5" strokeLinejoin="round" />
+      <rect x="16" y="22" width="32" height="22" stroke="var(--color-teal)" strokeWidth="1.5" />
       <rect x="20" y="27" width="7" height="7" fill="var(--color-remedy)" />
-      <rect x="36" y="27" width="7" height="7" stroke="var(--color-verdigris)" strokeWidth="1.25" />
-      <rect x="28" y="34" width="7" height="10" stroke="var(--color-verdigris)" strokeWidth="1.25" />
+      <rect x="36" y="27" width="7" height="7" stroke="var(--color-teal)" strokeWidth="1.25" />
+      <rect x="28" y="34" width="7" height="10" stroke="var(--color-teal)" strokeWidth="1.25" />
     </svg>
   );
 }
@@ -89,12 +89,12 @@ export function InfographicAnatomyView({ mode, active, renderHotspot, containerR
 
           <figure
             aria-label={sample.label}
-            className="@container relative aspect-[4/5] bg-paper text-ink shadow-[0_0_0_1px_var(--color-line-strong),0_24px_48px_-32px_rgb(17_24_22/0.5)]"
+            className="@container relative aspect-[4/5] bg-paper text-ink shadow-[0_0_0_1px_var(--color-line-strong),0_24px_48px_-32px_rgb(11_29_38/0.5)]"
           >
             <RegistrationMarks />
             <div className="flex h-full flex-col p-[7%]">
               <div className="flex items-start justify-between gap-4">
-                <p className="text-mono text-[clamp(0.5625rem,2.3cqi,0.6875rem)] text-verdigris">{sample.kicker}</p>
+                <p className="text-mono text-[clamp(0.5625rem,2.3cqi,0.6875rem)] text-teal">{sample.kicker}</p>
                 <div className="-mt-1 aspect-[4/3] w-[24%] shrink-0">
                   <HouseIllustration />
                 </div>
@@ -105,7 +105,7 @@ export function InfographicAnatomyView({ mode, active, renderHotspot, containerR
               <ol className="mt-[6%] grid border-t border-line">
                 {sample.questions.map((q, i) => (
                   <li key={q} className="flex items-baseline gap-3 border-b border-line py-[3%]">
-                    <span className="font-mono text-[clamp(0.625rem,2.5cqi,0.75rem)] font-semibold text-verdigris">
+                    <span className="font-mono text-[clamp(0.625rem,2.5cqi,0.75rem)] font-semibold text-teal">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="text-[clamp(0.6875rem,3.4cqi,1rem)] leading-snug font-medium">{q}</span>
@@ -150,7 +150,7 @@ export function InfographicAnatomyView({ mode, active, renderHotspot, containerR
             <div
               ref={noteRef}
               id={noteId}
-              className="relative border border-rule-strong bg-bg p-6 shadow-[inset_4px_0_0_var(--color-remedy)]"
+              className="relative border border-rule-strong bg-bg p-6 shadow-[inset_4px_0_0_var(--color-teal)]"
             >
               <p className="text-mono text-fg-muted">
                 Principle {String(active + 1).padStart(2, "0")} / {String(principleItems.length).padStart(2, "0")}
@@ -190,5 +190,5 @@ export const hotspotClass = (on: boolean) =>
     "grid h-9 w-9 place-items-center rounded-full font-mono text-[0.75rem] font-semibold tabular-nums transition-[background-color,box-shadow] duration-[var(--dur-1)]",
     on
       ? "bg-remedy text-ink shadow-[0_0_0_1.5px_var(--color-ink),0_0_0_5px_var(--color-paper)]"
-      : "bg-paper text-ink shadow-[inset_0_0_0_1.5px_var(--color-ink),0_0_0_4px_rgb(245_241_232/0.9)] hover:bg-mist",
+      : "bg-paper text-ink shadow-[inset_0_0_0_1.5px_var(--color-ink),0_0_0_4px_rgb(245_242_236/0.9)] hover:bg-mist",
   );

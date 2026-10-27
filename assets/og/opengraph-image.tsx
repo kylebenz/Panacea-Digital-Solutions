@@ -9,22 +9,30 @@ export const alt = `${site.name}: ${hero.title}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const paper = "#F5F1E8";
-const ink = "#111816";
-const inkRaised = "#1B2421";
-const verdigris = "#2D5A4E";
-const verdigrisBright = "#7DB8A6";
+const paper = "#F5F2EC";
+const ink = "#0B1D26";
+const inkRaised = "#132A35";
+const aqua = "#5EC8C8";
 const remedy = "#E0552D";
-const ink2 = "#4A5552";
+const ink2 = "#47565D";
+// The logo gradient, used as a hairline only.
+const gradient = "linear-gradient(90deg, #046081 0%, #0298B5 38%, #01D3DE 72%, #3DDBBA 100%)";
 
 export default async function Image() {
-  const [fraunces, mono] = await Promise.all([
+  const [fraunces, mono, mark] = await Promise.all([
     readFile(join(process.cwd(), "assets/fonts/Fraunces-Regular.ttf")),
     readFile(join(process.cwd(), "assets/fonts/JetBrainsMono-Medium.ttf")),
+    readFile(join(process.cwd(), "assets/brand/panacea-mark.png")),
   ]);
+  const markSrc = `data:image/png;base64,${mark.toString("base64")}`;
 
   return new ImageResponse(
-    <div style={{ display: "flex", width: "100%", height: "100%", background: paper, padding: 64 }}>
+    <div
+      style={{ display: "flex", width: "100%", height: "100%", background: paper, padding: 64, position: "relative" }}
+    >
+      <div
+        style={{ display: "flex", position: "absolute", left: 0, right: 0, bottom: 0, height: 6, background: gradient }}
+      />
       <div style={{ display: "flex", flexDirection: "column", flex: 1, paddingRight: 48 }}>
         <div style={{ display: "flex", fontFamily: "Mono", fontSize: 20, letterSpacing: 2, color: ink2 }}>
           CH 00 · 00:00:00 — OPENING
@@ -36,13 +44,13 @@ export default async function Image() {
         </div>
         <div style={{ display: "flex", flex: 1 }} />
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <div style={{ display: "flex", width: 22, height: 38, border: `3px solid ${ink}`, position: "relative" }} />
-          <div
-            style={{ display: "flex", width: 22, height: 22, background: verdigris, marginLeft: -21, marginTop: -16 }}
-          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- next/og renders <img> */}
+          <img src={markSrc} width={49} height={60} alt="" />
           <div style={{ display: "flex", flexDirection: "column", marginLeft: 6 }}>
             <div style={{ fontFamily: "Fraunces", fontSize: 30, letterSpacing: 3, color: ink }}>PANACEA</div>
-            <div style={{ fontFamily: "Mono", fontSize: 13, letterSpacing: 4, color: ink2 }}>DIGITAL SOLUTIONS</div>
+            <div style={{ fontFamily: "Mono", fontSize: 13, letterSpacing: 4, color: "#046081" }}>
+              DIGITAL SOLUTIONS
+            </div>
           </div>
           <div style={{ display: "flex", marginLeft: 40, fontFamily: "Fraunces", fontSize: 26, color: ink2 }}>
             {site.tagline}
@@ -85,14 +93,14 @@ export default async function Image() {
                   display: "flex",
                   height: 10,
                   width: `${w * 100}%`,
-                  background: verdigrisBright,
+                  background: aqua,
                   opacity: 0.85 - i * 0.2,
                 }}
               />
             ))}
           </div>
-          <div style={{ display: "flex", position: "relative", height: 4, background: "rgba(245,241,232,0.25)" }}>
-            <div style={{ display: "flex", width: "100%", height: 4, background: "rgba(245,241,232,0.7)" }} />
+          <div style={{ display: "flex", position: "relative", height: 4, background: "rgba(245,242,236,0.25)" }}>
+            <div style={{ display: "flex", width: "100%", height: 4, background: "rgba(245,242,236,0.7)" }} />
             <div
               style={{
                 display: "flex",
