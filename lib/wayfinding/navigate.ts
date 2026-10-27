@@ -47,17 +47,42 @@ let settleToken = 0;
 async function settle(target: HTMLElement) {
   const token = ++settleToken;
   await scrollSettled();
-  for (let attempt = 0; attempt < 5; attempt++) {
-    if (token !== settleToken) return; // a newer navigation took over
+
+  const correct = () => {
     const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
     const drift = target.getBoundingClientRect().top - margin;
     const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 1;
-    if (Math.abs(drift) <= 2 || (drift > 0 && atBottom)) return;
+    if (Math.abs(drift) <= 2 || (drift > 0 && atBottom)) return true;
     window.scrollBy({ top: drift, behavior: "instant" as ScrollBehavior });
+    return false;
+  };
+
+  for (let attempt = 0; attempt < 5; attempt++) {
+    if (token !== settleToken) return; // a newer navigation took over
+    if (correct()) break;
     await nextFrame();
     await nextFrame();
   }
+
+  // Islands near the landing spot hydrate on approach and can change the
+  // page height after we land. Keep the target in place through those late
+  // layout changes for a short while, until the reader scrolls themselves.
+  if (token !== settleToken) return;
+  const stop = () => {
+    observer.disconnect();
+    clearTimeout(timer);
+    for (const type of USER_SCROLL_EVENTS) window.removeEventListener(type, stop);
+  };
+  const observer = new ResizeObserver(() => {
+    if (token !== settleToken) return stop();
+    correct();
+  });
+  observer.observe(document.body);
+  const timer = setTimeout(stop, 2000);
+  for (const type of USER_SCROLL_EVENTS) window.addEventListener(type, stop, { once: true, passive: true });
 }
+
+const USER_SCROLL_EVENTS = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
 
 export function scrollToId(id: string, { updateHash = true } = {}) {
   const target = document.getElementById(id);

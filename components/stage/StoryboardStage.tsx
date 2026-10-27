@@ -209,10 +209,8 @@ export function StoryboardStage({ arts, thumbs }: { arts: ReactNode[]; thumbs: R
                   <Callout
                     n={i + 1}
                     active={on && built === i + 2 && t < TOTAL}
-                    className={cn(
-                      "h-6 w-6 text-[0.625rem] transition-opacity duration-[var(--dur-2)]",
-                      on ? "opacity-100" : "opacity-25",
-                    )}
+                    pending={!on}
+                    className="h-6 w-6 text-[0.625rem] transition-colors duration-[var(--dur-2)]"
                   />
                   <span
                     className="leader-in h-px w-4 shrink-0 bg-verdigris"

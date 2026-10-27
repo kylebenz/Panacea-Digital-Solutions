@@ -302,12 +302,14 @@ export default function InquiryFlow() {
             {contact.back}
           </Button>
         ) : null}
+        {/* Distinct keys: reusing one <button> node would let the Enter that
+            pressed Continue go on to submit the final step. */}
         {step < TOTAL - 1 ? (
-          <Button onClick={next} arrow>
+          <Button key="next" onClick={next} arrow>
             {contact.next}
           </Button>
         ) : (
-          <Button type="submit" arrow loading={status === "sending"} loadingLabel={contact.sending}>
+          <Button key="submit" type="submit" arrow loading={status === "sending"} loadingLabel={contact.sending}>
             {status === "failed" ? contact.failure.retry : contact.submit}
           </Button>
         )}

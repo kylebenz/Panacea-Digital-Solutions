@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { site } from "@/lib/site";
 import { seo } from "@/content/seo";
 import { Analytics } from "@/components/layout/Analytics";
@@ -9,25 +9,32 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { AnchorHandler } from "@/components/layout/AnchorHandler";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  // Variable weight (350–500 used) plus the optical-size axis.
-  axes: ["opsz"],
+/*
+ * Self-hosted, trimmed copies of the Google Fonts files (latin subset; see
+ * app/fonts/README.md). Only the axis ranges and OpenType features the
+ * design uses are kept, which takes the above-the-fold font weight from
+ * ~128 KB to ~96 KB.
+ */
+const fraunces = localFont({
+  // Variable: wght 350–500, opsz 12–80 (font-optical-sizing: auto).
+  src: [{ path: "./fonts/fraunces-latin.woff2", weight: "350 500", style: "normal" }],
   display: "swap",
+  adjustFontFallback: "Times New Roman",
   variable: "--font-fraunces",
 });
 
-const instrumentSans = Instrument_Sans({
-  subsets: ["latin"],
+const instrumentSans = localFont({
+  src: [{ path: "./fonts/instrument-sans-latin.woff2", weight: "400 600", style: "normal" }],
   display: "swap",
+  adjustFontFallback: "Arial",
   variable: "--font-instrument",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["500", "600"],
+const jetbrainsMono = localFont({
+  src: [{ path: "./fonts/jetbrains-mono-latin.woff2", weight: "500 600", style: "normal" }],
   display: "swap",
-  preload: false,
+  // Arial is the closest metric base next/font offers; labels are short.
+  adjustFontFallback: "Arial",
   variable: "--font-jetbrains",
 });
 

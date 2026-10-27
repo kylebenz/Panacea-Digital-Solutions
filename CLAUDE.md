@@ -75,6 +75,11 @@ to the register in `docs/phase-0-plan.md` §5. `npm run prelaunch` fails while a
   warns on claim words. `PRELAUNCH_ALLOW_VERIFY=1` downgrades known `[VERIFY]` items to warnings.
 - e2e: `npm run build && ./scripts/serve.sh` (port 3100, `FORM_WEBHOOK_URL=dry-run`), then
   `BASE_URL=http://localhost:3100 npx playwright test`.
+- Visual QA: `node scripts/qa-shots.mjs` (375/768/1280/1440, full page + per chapter). Lighthouse:
+  `npm run lighthouse` (median of N) or `npm run lhci` (budgets in `lighthouserc.cjs`; build with
+  `SITE_ENV=production`).
+- Fonts are trimmed, self-hosted files in `app/fonts/` (`next/font/local`); regenerate per
+  `app/fonts/README.md` if a new weight is needed.
 - Accessibility: WCAG 2.2 AA, axe zero violations; verdigris focus rings with offset;
   24px minimum targets; anchor jumps focus the chapter heading (`tabindex="-1"`).
 - Motion: `--ease-cut` easing, 180–600ms, stagger ≤ 60ms, wipes/mask reveals (not

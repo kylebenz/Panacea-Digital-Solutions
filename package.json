@@ -13,7 +13,9 @@
     "format": "prettier --write .",
     "media:portfolio": "node --import ./scripts/register-alias.mjs scripts/portfolio-media.ts",
     "prelaunch": "next build && node --import ./scripts/register-alias.mjs scripts/prelaunch.ts",
-    "prelaunch:check": "node --import ./scripts/register-alias.mjs scripts/prelaunch.ts"
+    "prelaunch:check": "node --import ./scripts/register-alias.mjs scripts/prelaunch.ts",
+    "lhci": "lhci autorun --config=./lighthouserc.cjs",
+    "lighthouse": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.2",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
@@ -38,6 +41,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
+    "lighthouse": "^13.5.0",
     "prettier": "^3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"

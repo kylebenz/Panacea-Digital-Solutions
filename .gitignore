@@ -45,3 +45,5 @@ next-env.d.ts
 /playwright-report/
 /screenshots/
 /.media-tmp/
+.lighthouse/
+/.lighthouseci/
