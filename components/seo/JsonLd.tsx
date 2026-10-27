@@ -27,6 +27,8 @@ export function JsonLd() {
       unitText: "MONTH",
     },
     url: `${base}/#pricing`,
+    // Only once the offer's end date is confirmed.
+    ...(site.promo.enabled && site.promo.endDate ? { priceValidUntil: site.promo.endDate } : {}),
   }));
 
   const service = (key: "video" | "infographic", anchor: string) => ({

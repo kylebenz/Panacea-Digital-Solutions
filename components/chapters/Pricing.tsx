@@ -1,6 +1,6 @@
 import { pricing } from "@/content/pricing";
 import type { Plan } from "@/lib/config-schema";
-import { formatPrice, perItemCost, planHref } from "@/lib/pricing";
+import { formatPrice, planHref } from "@/lib/pricing";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/cn";
 import { Chapter } from "@/components/layout/Chapter";
@@ -14,8 +14,26 @@ import { RevisionStatic } from "@/components/interactive/RevisionExplainerView";
  * from site.config.ts. Deliverables are drawn as tiles (9:16 for videos,
  * squares for infographics) so the difference in volume reads at a glance.
  * Growth is the visually featured middle option; no "most popular" claim
- * unless site.featuredPlanClaim is verified and set.
+ * unless site.featuredPlanClaim is verified and set. When the promo is on,
+ * each card carries a red "% off" tag and states its regular price in plain
+ * text (no crossed-out prices, no countdowns).
  */
+
+/** Red sale tag: a price-tag icon and "50% OFF". */
+function SaleBadge({ percent }: { percent: number }) {
+  return (
+    <span className="sale-badge">
+      <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 shrink-0" aria-hidden="true" fill="none">
+        <path
+          d="M8.6 1.5H14a.5.5 0 0 1 .5.5v5.4a1 1 0 0 1-.3.7l-6.6 6.6a1 1 0 0 1-1.4 0L1.3 9.8a1 1 0 0 1 0-1.4l6.6-6.6a1 1 0 0 1 .7-.3Z"
+          fill="currentColor"
+        />
+        <circle cx="11.25" cy="4.75" r="1.25" fill="var(--color-sale)" />
+      </svg>
+      {pricing.promo.badge(percent)}
+    </span>
+  );
+}
 
 function Tiles({ count, kind }: { count: number; kind: "video" | "square" }) {
   return (
@@ -50,10 +68,13 @@ function PlanCard({ plan, index, featured }: { plan: Plan; index: number; featur
       aria-labelledby={`plan-${plan.id}`}
       className={cn("flex flex-col p-6 sm:p-8", featured ? "lg:-my-6 lg:py-14" : "border border-rule-strong bg-bg")}
     >
-      <p className="text-mono flex justify-between text-fg-muted">
-        <span>{pricing.planKicker(index + 1)}</span>
-        {featured && site.featuredPlanClaim ? <span className="text-fg">{site.featuredPlanClaim}</span> : null}
-      </p>
+      <div className="flex min-h-7 items-center justify-between gap-3">
+        <p className="text-mono flex gap-3 text-fg-muted">
+          <span>{pricing.planKicker(index + 1)}</span>
+          {featured && site.featuredPlanClaim ? <span className="text-fg">{site.featuredPlanClaim}</span> : null}
+        </p>
+        {promo ? <SaleBadge percent={promo.percentOff} /> : null}
+      </div>
       <h3 id={`plan-${plan.id}`} className="text-display-m mt-3">
         {plan.name}
       </h3>
@@ -64,9 +85,8 @@ function PlanCard({ plan, index, featured }: { plan: Plan; index: number; featur
         <span className="text-fg-muted">{pricing.perMonth}</span>
       </p>
       {promo ? (
-        <p className="text-small mt-2 text-fg-muted">
-          {pricing.promo.regular(formatPrice(promo.regularPrices[plan.id]))}. {promo.terms}{" "}
-          {pricing.promo.window(promo.startDate, promo.endDate)}
+        <p className="text-small mt-3 text-fg-muted">
+          {pricing.promo.regular(formatPrice(promo.regularPrices[plan.id]))}
         </p>
       ) : null}
 
@@ -82,16 +102,30 @@ function PlanCard({ plan, index, featured }: { plan: Plan; index: number; featur
         <li className="border-t border-rule pt-4">{pricing.revisionLine}</li>
       </ul>
 
-      <p className="text-mono mt-6 text-fg-muted" title={pricing.perItemNote}>
-        {pricing.perItem(perItemCost(plan))}
-      </p>
-
       <div className="mt-auto pt-8">
         <Button href={planHref(plan.id)} variant={featured ? "primary" : "secondary"} arrow className="w-full">
           {plan.ctaLabel}
         </Button>
       </div>
     </article>
+  );
+}
+
+/** One line under the cards: the offer, then its dates and terms (or [VERIFY]). */
+function OfferNote() {
+  const promo = site.promo;
+  if (!promo.enabled) return null;
+  return (
+    <p className="text-small mt-8 flex flex-wrap items-center gap-x-2 gap-y-2 text-fg-muted">
+      <span className="inline-block h-2 w-2 shrink-0 rounded-full bg-sale" aria-hidden="true" />
+      <span className="text-fg">{pricing.promo.note(promo.percentOff)}</span>
+      {promo.startDate && promo.endDate ? (
+        <span>{pricing.promo.window(promo.startDate, promo.endDate)}</span>
+      ) : (
+        <VerifyMark>{pricing.promo.verifyDates}</VerifyMark>
+      )}
+      {promo.terms ? <span>{promo.terms}</span> : <VerifyMark>{pricing.promo.verifyTerms}</VerifyMark>}
+    </p>
   );
 }
 
@@ -103,7 +137,7 @@ export function Pricing() {
           <PlanCard key={plan.id} plan={plan} index={i} featured={plan.id === "growth"} />
         ))}
       </div>
-      <p className="text-small measure mt-6 text-fg-muted">{pricing.perItemNote}</p>
+      {site.promo.enabled ? <OfferNote /> : null}
 
       <div className="grid-12 mt-24 gap-y-10 border-t border-rule pt-16">
         <div className="col-span-12 lg:col-span-4">

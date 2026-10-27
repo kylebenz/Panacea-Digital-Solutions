@@ -7,7 +7,7 @@ import type { SiteConfigInput } from "@/lib/config-schema";
  *
  * This file is plain data so client components can read it without shipping
  * zod. lib/site.ts validates it against lib/config-schema.ts at build time:
- * an invalid config (for example an enabled promo with missing fields) fails
+ * an invalid config (for example promo prices that don't match the plans) fails
  * the build.
  */
 export const siteConfig = {
@@ -54,9 +54,13 @@ export const siteConfig = {
 
   featuredPlanClaim: null,
 
+  // Introductory offer: the guide (§9) states the current prices are 50% off,
+  // so the regular prices are twice the plan prices. Dates and terms are not
+  // confirmed yet (V-13) and render as [VERIFY] marks until filled in.
   promo: {
-    enabled: false,
-    regularPrices: null,
+    enabled: true,
+    percentOff: 50,
+    regularPrices: { starter: 198, growth: 398, scale: 1098 },
     startDate: null,
     endDate: null,
     terms: null,

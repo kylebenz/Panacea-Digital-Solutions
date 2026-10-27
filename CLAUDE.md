@@ -28,9 +28,12 @@ startups and small healthcare businesses).
    `permission: { onFile: true; clientName; approvedAt }`).
 5. **Pricing.** Starter $99/mo (4 videos + 4 infographics), Growth $199/mo (10 + 10),
    Scale $549/mo (30 + 30); every plan includes 1 revision per content item. Prices come
-   only from `site.config.ts`. **The "50% off" promotion stays OFF** — no crossed-out
-   prices, countdown timers, or invented urgency until regular prices, promo dates, and
-   terms are confirmed. No countdown component may exist.
+   only from `site.config.ts`. **The "50% off" offer is ON at the owner's request**
+   (guide §9: current prices are 50% off, so regular prices are $198 / $398 / $1,098).
+   Each card shows a red "50% OFF" tag and its regular price in plain text. Still: no
+   crossed-out prices, no countdown timers, no invented urgency; no countdown component
+   may exist. Offer dates and terms are unconfirmed and render as `[VERIFY]` (V-13).
+   No per-item cost is shown on the cards (owner's request).
 6. **Not a healthcare provider.** No medical-advice language; no clinical keywords used
    as if Panacea provides care; no invented clinical claims in any sample or demo.
 7. **No PHI.** The contact form says clearly not to submit patient names, medical
@@ -43,8 +46,8 @@ startups and small healthcare businesses).
 Also banned (brief §3.7): stock doctor/handshake imagery; purple/blue AI gradients, orbs,
 mesh blobs; glassmorphism; generic three-column icon-card grids as a primary layout;
 animated stat counters; logo strips; testimonial carousels; chatbot widgets; custom
-cursors; emoji; lorem ipsum; hype words (*revolutionize, unlock, elevate, supercharge,
-game-changing, cutting-edge, seamless, world-class, skyrocket*); exclamation marks in
+cursors; emoji; lorem ipsum; hype words (_revolutionize, unlock, elevate, supercharge,
+game-changing, cutting-edge, seamless, world-class, skyrocket_); exclamation marks in
 headings; caduceus, Rod of Asclepius, red cross, pills, or stethoscopes.
 
 ## Never invent facts

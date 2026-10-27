@@ -9,8 +9,6 @@ export const pricing = {
   videosLine: (n: number) => `${n} AI advertisement videos`,
   infographicsLine: (n: number) => `${n} infographic images`,
   revisionLine: "1 revision per content item",
-  perItem: (amount: string) => `≈ ${amount} per content item`,
-  perItemNote: "Monthly price divided by the number of videos and infographics.",
   tilesLabel: { videos: "Videos", infographics: "Infographics" },
   planKicker: (n: number) => `Package ${String(n).padStart(2, "0")}`,
 
@@ -56,8 +54,14 @@ export const pricing = {
     ],
   },
 
+  // Guide §9 promotion note: current prices are 50% off. The regular price is
+  // stated in plain text; no crossed-out prices, no countdowns, no urgency.
   promo: {
-    regular: (amount: string) => `Regular price ${amount}`,
+    badge: (percent: number) => `${percent}% off`,
+    regular: (amount: string) => `Regular price ${amount} / month`,
+    note: (percent: number) => `Current offer: ${percent}% off every package.`,
     window: (start: string, end: string) => `Offer runs ${start} to ${end}.`,
+    verifyDates: "offer start and end dates",
+    verifyTerms: "offer terms",
   },
 } as const;

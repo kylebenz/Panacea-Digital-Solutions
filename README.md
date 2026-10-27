@@ -92,22 +92,28 @@ Price cards, per-item cost, the inquiry form's package list, plan buttons
 prices anywhere else. `featuredPlanClaim` stays `null` unless a claim such as
 "most popular" is verified.
 
-### Promotion flag — `site.config.ts` → `promo`
+### Promotion — `site.config.ts` → `promo`
 
-Off by default. To turn it on, every field must be filled or the build fails:
+The 50% offer is **on** (guide §9 states the current prices are 50% off):
 
 ```ts
 promo: {
   enabled: true,
-  regularPrices: { starter: 198, growth: 398, scale: 1098 }, // the real, verified regular prices
-  startDate: "2026-11-01",
-  endDate: "2026-11-30",
-  terms: "…",
+  percentOff: 50,
+  regularPrices: { starter: 198, growth: 398, scale: 1098 },
+  startDate: null, // e.g. "2026-11-01"
+  endDate: null,   // e.g. "2026-11-30"
+  terms: null,     // e.g. "New clients, first three months."
 }
 ```
 
-The pricing cards then show the regular price, terms, and dates as plain text.
-There are no countdown timers or crossed-out prices, and none should be added.
+Each package card shows a red **50% OFF** tag and "Regular price $198 / month" in
+plain text; a line under the cards states the offer with its dates and terms.
+The build fails if the regular prices don't match the plan prices at the stated
+discount. While `startDate`/`endDate` or `terms` are `null`, the page shows
+`[VERIFY]` marks and `npm run prelaunch` blocks launch. When the offer ends, set
+`enabled: false` (the tags and regular prices disappear). There are no countdown
+timers or crossed-out prices, and none should be added.
 
 ### Portfolio — `content/portfolio-items.ts`
 

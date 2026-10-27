@@ -55,18 +55,21 @@ test.describe("chapters 07 and 09", () => {
     await expect(page.locator("#contact [data-chapter-heading]")).toBeFocused({ timeout: 4000 });
   });
 
-  test("7H: prices, tiles, and per-item cost come from config", async ({ page }) => {
+  test("7H: prices, tiles, and the 50% offer come from config", async ({ page }) => {
     await page.goto("/");
     await approach(page, "pricing");
     const section = page.locator("#pricing");
-    for (const [name, price, perItem, n] of [
-      ["Starter", "$99", "≈ $12.38 per content item", 4],
-      ["Growth", "$199", "≈ $9.95 per content item", 10],
-      ["Scale", "$549", "≈ $9.15 per content item", 30],
+    for (const [name, price, regular, n] of [
+      ["Starter", "$99", "Regular price $198 / month", 4],
+      ["Growth", "$199", "Regular price $398 / month", 10],
+      ["Scale", "$549", "Regular price $1,098 / month", 30],
     ] as const) {
       const card = section.getByRole("article", { name });
       await expect(card).toContainText(price);
-      await expect(card).toContainText(perItem);
+      await expect(card.locator(".sale-badge")).toHaveText(/50% off/i);
+      await expect(card).toContainText(regular);
+      // No per-item cost line (the removed "≈ $12.38 per content item").
+      await expect(card).not.toContainText("≈");
       await expect(card).toContainText(`${n} AI advertisement videos`);
       await expect(card).toContainText(`${n} infographic images`);
       await expect(card.getByRole("link", { name: `Choose ${name}` })).toHaveAttribute(
@@ -74,7 +77,10 @@ test.describe("chapters 07 and 09", () => {
         `/?package=${name.toLowerCase()}#contact`,
       );
     }
-    await expect(section).not.toContainText(/most popular|% off/i);
+    await expect(section).not.toContainText(/most popular/i);
+    // The discount is stated plainly: no crossed-out prices, no countdowns.
+    await expect(section.locator("s, del, strike, [style*='line-through']")).toHaveCount(0);
+    await expect(section).toContainText("Current offer: 50% off every package.");
   });
 
   test("7H: revision explainer toggles between its two states", async ({ page }) => {

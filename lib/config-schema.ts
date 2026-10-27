@@ -17,13 +17,16 @@ const planSchema = z.object({
 });
 
 /*
- * The "50% off" promotion stays off until regular prices, dates, and terms
- * are confirmed. Enabling it with any field missing fails the build, because
- * lib/site.ts parses site.config.ts with this schema during prerendering.
+ * The "50% off" introductory offer (guide §9 promotion note). When enabled it
+ * needs the discount and the regular price of every plan, and the regular
+ * prices must match: price = regular × (1 − percentOff / 100). Dates and
+ * terms may still be null while they're being confirmed; the page then shows
+ * [VERIFY] marks for them, which `npm run prelaunch` refuses to ship.
  */
 const promoSchema = z.discriminatedUnion("enabled", [
   z.object({
     enabled: z.literal(false),
+    percentOff: z.number().int().min(1).max(90).nullable(),
     regularPrices: z.record(z.enum(planIds), z.number().positive()).nullable(),
     startDate: z.iso.date().nullable(),
     endDate: z.iso.date().nullable(),
@@ -31,10 +34,11 @@ const promoSchema = z.discriminatedUnion("enabled", [
   }),
   z.object({
     enabled: z.literal(true),
+    percentOff: z.number().int().min(1).max(90),
     regularPrices: z.record(z.enum(planIds), z.number().positive()),
-    startDate: z.iso.date(),
-    endDate: z.iso.date(),
-    terms: z.string().min(1),
+    startDate: z.iso.date().nullable(),
+    endDate: z.iso.date().nullable(),
+    terms: z.string().min(1).nullable(),
   }),
 ]);
 
@@ -69,6 +73,19 @@ export const siteConfigSchema = z
     chapters: z.array(chapterSchema).min(1),
   })
   .superRefine((config, ctx) => {
+    if (config.promo.enabled) {
+      const { percentOff, regularPrices } = config.promo;
+      for (const plan of config.plans) {
+        const discounted = regularPrices[plan.id] * (1 - percentOff / 100);
+        if (Math.abs(discounted - plan.priceMonthly) >= 0.5) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["promo", "regularPrices", plan.id],
+            message: `${percentOff}% off ${regularPrices[plan.id]} is ${discounted}, not the plan price ${plan.priceMonthly}`,
+          });
+        }
+      }
+    }
     const ids = new Set<string>();
     config.chapters.forEach((chapter, index) => {
       if (ids.has(chapter.id)) {
