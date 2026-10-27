@@ -17,6 +17,8 @@ const registry = {
   "audience-chips": lazy(() => import("@/components/interactive/AudienceChips")),
   "portfolio-explorer": lazy(() => import("@/components/interactive/PortfolioExplorer")),
   "revision-explainer": lazy(() => import("@/components/interactive/RevisionExplainer")),
+  faq: lazy(() => import("@/components/interactive/FaqExplorer")),
+  "inquiry-flow": lazy(() => import("@/components/interactive/InquiryFlow")),
 } as const;
 
 export type IslandName = keyof typeof registry;

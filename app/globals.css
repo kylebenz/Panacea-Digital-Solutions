@@ -748,3 +748,17 @@
   font-optical-sizing: auto;
   text-wrap: pretty;
 }
+
+/* No-JS inquiry outcomes: the handler redirects to #inquiry-*; :target shows
+   the message, and the static form hides after a successful send. */
+.inquiry-outcome {
+  display: none;
+  scroll-margin-top: calc(var(--header-h-condensed) + 2rem);
+}
+.inquiry-outcome:target {
+  display: block;
+}
+#inquiry-sent:target ~ .static-inquiry,
+#inquiry-sent:target ~ * .static-inquiry {
+  display: none;
+}
