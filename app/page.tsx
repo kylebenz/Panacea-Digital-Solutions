@@ -1,4 +1,5 @@
 import { Hero } from "@/components/chapters/Hero";
+import { SampleStrip } from "@/components/chapters/SampleStrip";
 import { Why } from "@/components/chapters/Why";
 import { Services } from "@/components/chapters/Services";
 import { AdVideos } from "@/components/chapters/AdVideos";
@@ -22,6 +23,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <SampleStrip />
       <Why />
       <Services />
       <AdVideos />

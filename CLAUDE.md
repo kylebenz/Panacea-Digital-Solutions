@@ -76,3 +76,6 @@ to the register in `docs/phase-0-plan.md` §5. `npm run prelaunch` fails while a
 - Performance: hydrate interactive chapters on approach (dynamic `import()` +
   IntersectionObserver, ~600px rootMargin); keep Radix, Motion, and zod out of
   first-load JS; no `<video>` above the fold.
+- JS budget (agreed at Checkpoint 2): the Next.js 16 + React 19 framework floor is
+  ~165 KB gz; **our own first-load JS must stay ≤ 30 KB gz on top of it**. Lighthouse
+  Performance ≥ 95, LCP ≤ 2.0s, CLS ≤ 0.05, INP ≤ 200ms remain the hard gates.

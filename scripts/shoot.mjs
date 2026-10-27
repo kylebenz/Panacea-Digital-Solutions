@@ -9,7 +9,10 @@ for (const width of widths) {
   await page.evaluate(() => document.fonts.ready);
   // content-visibility: auto skips painting off-screen chapters, which a
   // full-page capture would show as blank bands.
-  await page.addStyleTag({ content: ".chapter[data-defer]{content-visibility:visible!important}" });
+  await page.addStyleTag({
+    content:
+      ".chapter[data-defer]{content-visibility:visible!important}.reveal-wipe,.reveal-mask{animation:none!important}",
+  });
   const name = new URL(url).pathname.replace(/\//g, "_") || "_";
   await page.screenshot({ path: `${out}/${name}-${width}-fold.png` });
   await page.screenshot({ path: `${out}/${name}-${width}-full.png`, fullPage: true });

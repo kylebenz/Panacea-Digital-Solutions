@@ -11,10 +11,13 @@ export function PhoneFrame({
   timecode,
   progress,
   label,
+  captionBoxed = true,
   className,
 }: {
   children?: ReactNode;
   caption?: ReactNode;
+  /** false when the caption brings its own per-word backgrounds. */
+  captionBoxed?: boolean;
   timecode?: ReactNode;
   /** 0–1; draws a scrub bar with a remedy playhead. */
   progress?: number;
@@ -37,10 +40,12 @@ export function PhoneFrame({
           <div className="absolute top-3 left-3 rounded-xs bg-ink/80 px-1.5 py-0.5 text-paper">{timecode}</div>
         ) : null}
         {caption ? (
-          <div className="absolute inset-x-4 bottom-10 text-center">
-            <span className="box-decoration-clone rounded-xs bg-ink px-1.5 py-0.5 text-[0.9375rem] leading-[1.6] font-semibold text-paper">
-              {caption}
-            </span>
+          <div className="absolute inset-x-4 bottom-10 text-center text-[0.9375rem] leading-[1.6] font-semibold text-paper">
+            {captionBoxed ? (
+              <span className="box-decoration-clone rounded-xs bg-ink px-1.5 py-0.5">{caption}</span>
+            ) : (
+              caption
+            )}
           </div>
         ) : null}
         {typeof progress === "number" ? (

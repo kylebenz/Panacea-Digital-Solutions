@@ -4,7 +4,8 @@ import { chromium } from "playwright";
 const base = process.argv[2] ?? "http://localhost:3100";
 const out = process.argv[3] ?? "screenshots/checkpoint-2";
 const browser = await chromium.launch(process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : {});
-const showDeferred = ".chapter[data-defer]{content-visibility:visible!important}";
+const showDeferred =
+  ".chapter[data-defer]{content-visibility:visible!important}.reveal-wipe,.reveal-mask{animation:none!important}";
 
 async function open(width, path = "/") {
   const page = await browser.newPage({ viewport: { width, height: width < 800 ? 812 : 900 }, deviceScaleFactor: 2 });
