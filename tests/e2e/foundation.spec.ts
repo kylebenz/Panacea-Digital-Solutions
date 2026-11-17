@@ -3,17 +3,15 @@ import AxeBuilder from "@axe-core/playwright";
 
 const chapterIds = [
   "top",
+  "work",
   "why",
-  "services",
-  "ad-videos",
-  "infographics",
-  "demo",
-  "process",
-  "portfolio",
-  "who-we-help",
-  "pricing",
+  "how-it-works",
+  "breakdowns",
   "about",
+  "formats",
   "faq",
+  "pricing",
+  "fit",
   "contact",
 ];
 
@@ -40,16 +38,15 @@ test.describe("foundation", () => {
     for (const id of chapterIds) await expect(page.locator(`[id="${id}"]`)).toHaveCount(1);
   });
 
-  test("rail ticks jump to their chapter and move focus to its heading", async ({ page }, info) => {
-    test.skip(info.project.name !== "desktop", "Rail is desktop-only");
+  test("header links jump to their chapter and move focus to its heading", async ({ page }, info) => {
+    test.skip(info.project.name !== "desktop", "Desktop nav");
     await page.goto("/");
-    const rail = page.getByRole("navigation", { name: "Page chapters" });
-    await expect(rail.getByRole("link")).toHaveCount(chapterIds.length);
-    for (const id of ["pricing", "ad-videos", "contact", "why"]) {
-      await rail.locator(`a[href="/#${id}"]`).click();
+    const nav = page.getByRole("navigation", { name: "Primary" });
+    await expect(nav.getByRole("link")).toHaveCount(4);
+    for (const id of ["pricing", "how-it-works", "work", "breakdowns"]) {
+      await nav.locator(`a[href="/#${id}"]`).click();
       await expect.poll(async () => Math.abs(await headingOffset(page, id)), { timeout: 5000 }).toBeLessThanOrEqual(4);
       await expect(page.locator(`#${id} [data-chapter-heading]`)).toBeFocused();
-      await expect(rail.locator(`a[href="/#${id}"]`)).toHaveAttribute("aria-current", "location");
     }
   });
 
@@ -66,7 +63,7 @@ test.describe("foundation", () => {
     test.skip(info.project.name !== "mobile", "Mobile menu");
     await page.goto("/");
     await page.getByRole("button", { name: "Menu" }).click();
-    const dialog = page.getByRole("dialog", { name: "Chapters" });
+    const dialog = page.getByRole("dialog", { name: "Menu" });
     await expect(dialog).toBeVisible();
     for (let i = 0; i < 20; i++) await page.keyboard.press("Tab");
     expect(await dialog.evaluate((d) => d.contains(document.activeElement))).toBe(true);
@@ -74,7 +71,6 @@ test.describe("foundation", () => {
     await expect(dialog).toBeHidden();
     await expect.poll(async () => Math.abs(await headingOffset(page, "faq")), { timeout: 5000 }).toBeLessThanOrEqual(4);
     await expect(page.locator("#faq [data-chapter-heading]")).toBeFocused();
-    await expect(page.getByRole("banner").locator("p.text-mono")).toContainText("FAQ");
   });
 
   test("mobile CTA bar appears after the hero and hides at #contact", async ({ page }, info) => {
@@ -82,7 +78,7 @@ test.describe("foundation", () => {
     await page.goto("/");
     const bar = page.locator("[data-mobile-cta]");
     await expect(bar).toHaveAttribute("inert", "");
-    await scrollToChapter(page, "services");
+    await scrollToChapter(page, "how-it-works");
     await expect(bar).not.toHaveAttribute("inert", "");
     await scrollToChapter(page, "contact");
     await expect(bar).toHaveAttribute("inert", "");

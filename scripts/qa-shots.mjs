@@ -9,17 +9,15 @@ const out = process.argv[3] ?? "screenshots/phase-8";
 const widths = [375, 768, 1280, 1440];
 const chapters = [
   "top",
+  "work",
   "why",
-  "services",
-  "ad-videos",
-  "infographics",
-  "demo",
-  "process",
-  "portfolio",
-  "who-we-help",
-  "pricing",
+  "how-it-works",
+  "breakdowns",
   "about",
+  "formats",
   "faq",
+  "pricing",
+  "fit",
   "contact",
 ];
 // Render deferred chapters and finish entrance reveals so nothing is captured mid-wipe.

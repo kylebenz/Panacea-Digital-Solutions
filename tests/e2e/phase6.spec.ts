@@ -17,13 +17,13 @@ async function fillAll(page: import("@playwright/test").Page) {
   await form.getByLabel("Healthcare specialty or service type").fill("Home care");
   await form.getByRole("button", { name: "Continue" }).click();
   await form
-    .getByLabel("What services or message do you want to promote?")
+    .getByLabel("What should your video dramas explain or promote?")
     .fill("Short videos introducing our visit scheduling.");
   // The minimum time-to-submit check needs a few seconds on the form.
   await page.waitForTimeout(3100);
 }
 
-test.describe("chapters 10–12, legal pages, 404", () => {
+test.describe("FAQ, inquiry form, legal pages, 404", () => {
   test("7I: step validation shows inline errors and moves focus", async ({ page }) => {
     await page.goto("/");
     await approach(page, "contact");
@@ -56,7 +56,7 @@ test.describe("chapters 10–12, legal pages, 404", () => {
     await page.locator("#contact form").getByRole("button", { name: "Send Inquiry" }).click();
     await expect(page.getByRole("heading", { name: "Your inquiry wasn’t sent." })).toBeVisible();
     await expect(page.getByRole("button", { name: "Try again" })).toBeVisible();
-    await expect(page.getByLabel("What services or message do you want to promote?")).toHaveValue(/visit scheduling/);
+    await expect(page.getByLabel("What should your video dramas explain or promote?")).toHaveValue(/visit scheduling/);
   });
 
   test("7I: plan buttons and ?package= pre-select the package", async ({ page }) => {
@@ -85,7 +85,7 @@ test.describe("chapters 10–12, legal pages, 404", () => {
       "Name",
       "Business email",
       "Healthcare business name",
-      "What services or message do you want to promote?",
+      "What should your video dramas explain or promote?",
     ]) {
       await expect(form.getByLabel(label, { exact: true })).toBeVisible();
     }
@@ -93,20 +93,15 @@ test.describe("chapters 10–12, legal pages, 404", () => {
     await context.close();
   });
 
-  test("FAQ: filter, accordion, and per-question anchors", async ({ page }) => {
+  test("FAQ: native accordion and per-question anchors", async ({ page }) => {
     await page.goto("/");
     await approach(page, "faq");
     const section = page.locator("#faq");
-    await section.getByLabel("Filter questions").fill("revision");
-    await expect(section.getByText(/Showing \d+ of 10 questions/)).not.toHaveText("Showing 10 of 10 questions");
-    await section.getByRole("button", { name: /^\d+ What does one revision mean\?$/ }).click();
+    await expect(section.locator("details")).toHaveCount(12);
+    await section.getByText("What does one revision mean?").click();
     await expect(section.getByText(/consolidated set of reasonable changes/)).toBeVisible();
     // Closed answers stay in the DOM for indexing.
-    await section.getByLabel("Filter questions").fill("");
-    await expect(page.locator("#faq-how-do-you-use-ai")).toContainText("AI-assisted tools may be used");
-    await page.goto("/#faq-patient-stories-or-images");
-    await approach(page, "faq");
-    await expect(page.getByText(/appropriate authority and permissions/)).toBeVisible();
+    await expect(page.locator("#faq-how-do-you-use-ai")).toContainText("We use AI tools");
   });
 
   test("legal shells and 404", async ({ page }) => {
@@ -133,7 +128,7 @@ test.describe("chapters 10–12, legal pages, 404", () => {
     });
   }
 
-  test("axe with Phase 6 islands hydrated", async ({ page }) => {
+  test("axe with the form island hydrated", async ({ page }) => {
     await page.goto("/");
     for (const id of ["about", "faq", "contact"]) await approach(page, id);
     await page.waitForTimeout(400);

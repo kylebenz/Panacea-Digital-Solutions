@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { chapterHref, chapterTimecode, chapters } from "@/lib/chapters";
+import { chapterHref, chapters } from "@/lib/chapters";
 import { globalCopy } from "@/content/global";
 import { cn } from "@/lib/cn";
 import { inPageId, scrollToId } from "@/lib/wayfinding/navigate";
@@ -61,31 +61,34 @@ export default function MobileMenuDialog({
           <nav aria-label={globalCopy.menuTitle} className="page flex-1 py-6">
             <Dialog.Title className="text-mono mb-4 text-fg-muted">{globalCopy.menuTitle}</Dialog.Title>
             <ol className="border-t border-rule">
-              {chapters.map((chapter, index) => {
-                const current = chapter.id === activeId;
-                return (
-                  <li
-                    key={chapter.id}
-                    className="mobile-menu-item border-b border-rule"
-                    style={{ "--i": index } as React.CSSProperties}
-                  >
-                    <a
-                      href={chapterHref(chapter.id)}
-                      onClick={onLinkClick}
-                      aria-current={current ? "location" : undefined}
-                      className="flex min-h-12 items-baseline gap-4 py-2.5 no-underline"
+              {chapters
+                .filter((chapter) => chapter.id !== "top")
+                .map((chapter, index) => {
+                  const current = chapter.id === activeId;
+                  return (
+                    <li
+                      key={chapter.id}
+                      className="mobile-menu-item border-b border-rule"
+                      style={{ "--i": index } as React.CSSProperties}
                     >
-                      <span className={cn("text-mono w-7 shrink-0", current ? "text-accent" : "text-fg-muted")}>
-                        {chapter.number}
-                      </span>
-                      <span className="font-display flex-1 text-[1.5rem] leading-tight">{chapter.label}</span>
-                      <span className="text-mono text-fg-muted" aria-hidden="true">
-                        {chapterTimecode(chapter.number)}
-                      </span>
-                    </a>
-                  </li>
-                );
-              })}
+                      <a
+                        href={chapterHref(chapter.id)}
+                        onClick={onLinkClick}
+                        aria-current={current ? "location" : undefined}
+                        className="flex min-h-12 items-baseline gap-4 py-2.5 no-underline"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            "h-1.5 w-1.5 shrink-0 self-center rounded-full",
+                            current ? "bg-accent" : "bg-transparent",
+                          )}
+                        />
+                        <span className="font-display flex-1 text-[1.5rem] leading-tight">{chapter.label}</span>
+                      </a>
+                    </li>
+                  );
+                })}
             </ol>
           </nav>
           <div className="page sticky bottom-0 border-t border-rule bg-bg py-4">

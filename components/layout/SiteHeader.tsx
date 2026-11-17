@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { chapterHref, chapters, navChapters } from "@/lib/chapters";
+import { chapterHref, navChapters } from "@/lib/chapters";
 import { globalCopy } from "@/content/global";
 import { cn } from "@/lib/cn";
 import { restartWayfinding, useWayfinding } from "@/lib/wayfinding/store";
@@ -20,7 +20,6 @@ export function SiteHeader() {
     restartWayfinding();
   }, [pathname]);
 
-  const active = chapters.find((chapter) => chapter.id === activeId);
   const isHome = pathname === "/";
 
   return (
@@ -46,19 +45,9 @@ export function SiteHeader() {
           <Logo subline={!condensed} wordmarkClassName={condensed ? "max-sm:hidden" : undefined} />
         </a>
 
-        {/* Mobile: current chapter in mono (brief 5 · Mobile, 7B · Mobile) */}
-        <p
-          className="text-mono min-w-0 flex-1 truncate text-right text-fg-muted lg:hidden"
-          aria-hidden={!isHome || !active || active.id === "top" ? true : undefined}
-        >
-          {isHome && active && active.id !== "top" ? (
-            <>
-              <span className="text-fg">CH {active.number}</span> · {active.label}
-            </>
-          ) : null}
-        </p>
+        <span className="flex-1" aria-hidden="true" />
 
-        <nav aria-label={globalCopy.primaryNavLabel} className="ml-auto hidden lg:block">
+        <nav aria-label={globalCopy.primaryNavLabel} className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {navChapters.map((chapter) => {
               const current = isHome && chapter.id === activeId;
@@ -87,7 +76,7 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <Button href={chapterHref("contact")} size="sm" className="hidden shrink-0 sm:inline-flex">
+        <Button href={chapterHref("contact")} size="sm" arrow className="hidden shrink-0 sm:inline-flex">
           {globalCopy.getStarted}
         </Button>
 

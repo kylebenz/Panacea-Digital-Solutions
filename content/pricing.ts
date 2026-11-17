@@ -1,64 +1,29 @@
-// Guide §9 — Pricing page (verbatim where quoted); page H1 becomes the chapter H2.
-// Prices and counts are never written here: they come from site.config.ts.
+// Pricing. Prices and counts are never written here: they come from site.config.ts.
 export const pricing = {
-  title: "Monthly Healthcare Content Packages",
-  intro:
-    "Choose a monthly content package based on how many promotional assets your healthcare business needs. Every package includes AI-assisted advertisement videos, infographic images, and one revision per content item.",
-  perMonth: "/ month",
-  // Guide §9 table wording.
-  videosLine: (n: number) => `${n} AI advertisement videos`,
-  infographicsLine: (n: number) => `${n} infographic images`,
-  revisionLine: "1 revision per content item",
-  tilesLabel: { videos: "Videos", infographics: "Infographics" },
-  planKicker: (n: number) => `Package ${String(n).padStart(2, "0")}`,
+  title: "Pick your monthly volume.",
+  intro: "Every package is done for you, from story idea to final video, with one revision per video.",
+  catalogName: "Monthly AI video drama packages",
+  perMonth: "/mo",
+  kickers: { starter: "Try the format", growth: "Build a series", scale: "Daily volume" } as Record<string, string>,
+  recommended: "Recommended",
+  videosLine: (n: number) => `${n} AI video dramas a month`,
+  features: [
+    "Story ideas and episode hooks",
+    "Scripts written for you",
+    "AI-generated characters, voices, and scenes",
+    "Captions, music, and editing",
+  ],
+  revisionLine: "1 revision per video",
 
-  revision: {
-    title: "What one revision covers",
-    toggleLabel: "Revision explainer",
-    included: {
-      label: "Included in your revision",
-      // Guide §12, first sentence of "What does one revision mean?"
-      definition:
-        "One revision is one consolidated set of reasonable changes to a draft within the original approved direction.",
-      examples: [
-        "Adjusting on-screen text wording",
-        "Tightening captions",
-        "Reordering points within the approved direction",
-      ],
-      verify: "confirm these examples of included changes",
-    },
-    separate: {
-      label: "Needs a separate quote",
-      // Guide §12, second sentence.
-      definition:
-        "New concepts, substantial changes after approval, or additional versions may require a separate quote.",
-      examples: ["New concepts", "Substantial changes after approval", "Additional versions"],
-      verify: "confirm these examples of separately quoted work",
-    },
-    examplesLabel: "Examples",
-  },
-
-  terms: {
-    title: "Package terms",
-    intro: "These details are being confirmed and will be listed here before launch.",
-    // Guide §9 "Pricing terms to explain on the page".
-    items: [
-      {
-        label: "Video length, formats, captions, voiceover, and AI-avatar options",
-        verify: "standard video specifications",
-      },
-      { label: "What one revision includes and what counts as extra work", verify: "extra-work definition" },
-      { label: "When the monthly cycle begins and the delivery schedule", verify: "cycle start and delivery schedule" },
-      { label: "Payment, renewal, cancellation, and unused deliverables", verify: "payment and cancellation terms" },
-      { label: "Excluded third-party costs and special production requests", verify: "exclusions" },
-    ],
-  },
+  // V-04–V-08: package terms still being confirmed.
+  terms: "Package terms",
+  verifyTerms: "video length, delivery schedule, payment, cancellation, and exclusions",
 
   // Guide §9 promotion note: current prices are 50% off. The regular price is
   // stated in plain text; no crossed-out prices, no countdowns, no urgency.
   promo: {
     badge: (percent: number) => `${percent}% off`,
-    regular: (amount: string) => `Regular price ${amount} / month`,
+    regular: (amount: string) => `Regular price ${amount}/mo`,
     note: (percent: number) => `Current offer: ${percent}% off every package.`,
     window: (start: string, end: string) => `Offer runs ${start} to ${end}.`,
     verifyDates: "offer start and end dates",

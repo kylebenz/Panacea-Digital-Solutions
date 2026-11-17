@@ -1,10 +1,10 @@
 // Guide §6 final CTA and §13 Contact page (verbatim); form labels are the
 // guide's suggested fields. Step names, hints, errors, and states are microcopy.
 export const contact = {
-  title: "Tell Us About Your Healthcare Content Needs",
-  leadIn: "Help people understand the healthcare services you provide.",
+  title: "Tell us about the story you want to tell.",
+  leadIn: "Help people understand the healthcare services you provide, one episode at a time.",
   leadInBody:
-    "Tell us about your business and the content you need. We’ll help you review the available monthly packages and decide on a suitable next step.",
+    "Tell us about your business and what you want your video dramas to explain. We’ll help you review the monthly packages and decide on a suitable next step.",
   intro:
     "Tell us a little about your healthcare business and what you want your content to communicate. We’ll review your inquiry and follow up about the next step.",
   // Guide §13 form note (verbatim). Shown at the top of the form and beside the message field.
@@ -40,7 +40,7 @@ export const contact = {
       hint: "For example: home care, physical therapy, telehealth app.",
     },
     package: { label: "Package of interest", notSure: "Not sure yet" },
-    message: { label: "What services or message do you want to promote?" },
+    message: { label: "What should your video dramas explain or promote?" },
   },
   errors: {
     name: "Enter your name.",

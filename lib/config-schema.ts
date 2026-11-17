@@ -11,7 +11,6 @@ const planSchema = z.object({
   name: z.string().min(1),
   priceMonthly: z.number().positive(),
   videos: z.number().int().positive(),
-  infographics: z.number().int().positive(),
   revisionsPerItem: z.literal(1),
   ctaLabel: z.string().min(1),
 });

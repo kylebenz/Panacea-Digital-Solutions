@@ -216,6 +216,15 @@ Topic filter: Service introductions · Common questions · Process explainers ·
 
 ## 5. `[VERIFY]` register
 
+> **2026-11-17 — service and layout change (owner's request).** Infographics were dropped;
+> the site now sells AI video dramas only, laid out after the owner's reference page.
+> V-04–V-08 now render as one combined mark under the pricing cards ("video length,
+> delivery schedule, payment, cancellation, and exclusions"). V-09 and V-10 (revision
+> explainer examples) are retired with the explainer; the FAQ keeps the guide's revision
+> answer verbatim. O-05 now refers to the video slots in `content/work.ts` and
+> `content/breakdowns.ts` (all empty placeholders). Sections §2–§3 below describe the
+> original build and are kept for history.
+
 **Visible on the page** (rendered as `[VERIFY: …]`; `npm run prelaunch` fails until resolved):
 
 | ID   | Where                        | Item                                                                                                                                                           |
@@ -236,20 +245,20 @@ Topic filter: Service introductions · Common questions · Process explainers ·
 
 **Open items, not rendered** (tracked here and in the final report):
 
-| ID   | Item                                                                                                                                                      |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| O-01 | Production domain (drives `metadataBase`, canonical, sitemap, OG URLs)                                                                                    |
-| O-02 | Promotion turned **on** at the owner's request (50%; regular prices derived from guide §9). Dates/terms open → V-13                                       |
-| O-03 | Whether Growth may be called "most popular" (not shown unless verified)                                                                                   |
-| O-04 | Logo supplied and in use (raster). Open: vector logo; official fonts, if any                                                                              |
-| O-05 | Portfolio: final video files, posters, and `.vtt` captions to replace placeholders; any client work needs written permission (`clientName`, `approvedAt`) |
-| O-06 | `FORM_WEBHOOK_URL` destination (e.g. GoHighLevel inbound webhook or email service)                                                                        |
-| O-07 | Analytics: Plausible domain; whether GA4 is wanted (requires consent banner)                                                                              |
-| O-08 | Social profile URLs for Organization `sameAs` (omitted until verified)                                                                                    |
-| O-09 | Whether to enable Cloudflare Turnstile                                                                                                                    |
-| O-10 | Hosting choice: Netlify (default) or Vercel                                                                                                               |
-| O-11 | Keyword themes are unvalidated (guide §3–4) — validate with keyword tools / Search Console after launch                                                   |
-| O-12 | Inquiry follow-up time — success message will not state a timeframe unless you confirm one                                                                |
+| ID   | Item                                                                                                                                                         |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| O-01 | Production domain (drives `metadataBase`, canonical, sitemap, OG URLs)                                                                                       |
+| O-02 | Promotion turned **on** at the owner's request (50%; regular prices derived from guide §9). Dates/terms open → V-13                                          |
+| O-03 | Whether Growth may be called "most popular" (not shown unless verified)                                                                                      |
+| O-04 | Logo supplied and in use (raster). Open: vector logo; official fonts, if any                                                                                 |
+| O-05 | Video slots: final video files, posters, and `.vtt` captions to fill the placeholders; any client work needs written permission (`clientName`, `approvedAt`) |
+| O-06 | `FORM_WEBHOOK_URL` destination (e.g. GoHighLevel inbound webhook or email service)                                                                           |
+| O-07 | Analytics: Plausible domain; whether GA4 is wanted (requires consent banner)                                                                                 |
+| O-08 | Social profile URLs for Organization `sameAs` (omitted until verified)                                                                                       |
+| O-09 | Whether to enable Cloudflare Turnstile                                                                                                                       |
+| O-10 | Hosting choice: Netlify (default) or Vercel                                                                                                                  |
+| O-11 | Keyword themes are unvalidated (guide §3–4) — validate with keyword tools / Search Console after launch                                                      |
+| O-12 | Inquiry follow-up time — success message will not state a timeframe unless you confirm one                                                                   |
 
 ---
 

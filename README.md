@@ -1,8 +1,8 @@
 # Panacea Digital Solutions — website
 
-Single-page marketing site for Panacea Digital Solutions: AI-assisted healthcare
-advertisement videos and healthcare infographic images for U.S. healthcare startups
-and small healthcare businesses.
+Single-page marketing site for Panacea Digital Solutions: short, AI-assisted video
+dramas for U.S. healthcare startups and small healthcare businesses. (Infographics
+were dropped as a service on 2026-11-17 at the owner's request.)
 
 - **Copy, pricing, claims, compliance:** `docs/brand-guide.md` (source: `docs/brand-guide.pdf`).
   The guide wins over everything else.
@@ -84,10 +84,10 @@ which also lints for hype words, emoji, outcome claims, and "web design".
 ### Pricing — `site.config.ts` → `plans`
 
 ```ts
-{ id: "growth", name: "Growth", priceMonthly: 199, videos: 10, infographics: 10, revisionsPerItem: 1, ctaLabel: "Choose Growth" }
+{ id: "growth", name: "Growth", priceMonthly: 199, videos: 10, revisionsPerItem: 1, ctaLabel: "Choose Growth" }
 ```
 
-Price cards, per-item cost, the inquiry form's package list, plan buttons
+Price cards, the inquiry form's package list, plan buttons
 (`/?package=growth#contact`), and structured data all read from here. Do not type
 prices anywhere else. `featuredPlanClaim` stays `null` unless a claim such as
 "most popular" is verified.
@@ -115,29 +115,37 @@ discount. While `startDate`/`endDate` or `terms` are `null`, the page shows
 `enabled: false` (the tags and regular prices disappear). There are no countdown
 timers or crossed-out prices, and none should be added.
 
-### Portfolio — `content/portfolio-items.ts`
+### Videos — `content/work.ts` and `content/breakdowns.ts`
 
-Each item is a `PortfolioItem`. Fictional work uses `status: "concept"` and always
-shows the **Concept Sample** badge. Real client work must carry written
+Every video slot starts as a placeholder ("Video coming soon"). To add a finished
+video, put the files in `public/media/work/` and fill in that slot's `media`:
+
+```ts
+media: {
+  src: "/media/work/first-visit-nerves.mp4",
+  captions: "/media/work/first-visit-nerves.vtt",
+  poster: "/media/work/first-visit-nerves.webp",
+}
+```
+
+The slot then renders a native player that loads nothing until play is pressed.
+The hero phone (`components/chapters/Hero.tsx`) is a placeholder too.
+
+Each slot is a `VideoSlot` (`lib/work.ts`). Fictional work uses `status: "concept"`
+and always shows the **Concept Sample** label. Real client work must carry written
 permission, or TypeScript and `npm run prelaunch` both reject it:
 
 ```ts
 { status: "client", permission: { onFile: true, clientName: "…", approvedAt: "2026-11-01" }, … }
 ```
 
-Video media lives in `public/media/portfolio/<slug>.{mp4,vtt}` and
-`<slug>-poster.webp`. To replace a placeholder: drop in the real `.mp4` and its
-`.vtt` captions, set `media.placeholder: false`, and keep the `script` cues in sync
-with the captions (the lightbox shows them as a transcript).
-`npm run media:portfolio` regenerates captions and posters from content.
-
 ### Chapter order — `site.config.ts` → `chapters`
 
 ```ts
-{ id: "pricing", number: "09", label: "Pricing", nav: "Pricing", tone: "paper" }
+{ id: "pricing", number: "08", label: "Pricing", nav: "Pricing", tone: "paper-2" }
 ```
 
-The header nav (items with `nav`), chapter rail, footer nav, and mobile menu are
+The header nav (items with `nav`), section eyebrows, footer nav, and mobile menu are
 all generated from this list. To reorder, move entries, renumber them, and move
 the matching chapter component in `app/page.tsx`; `npm run prelaunch` fails if the
 page order and the config disagree. Keep `id`s stable — they are public URLs
@@ -188,7 +196,7 @@ each service, pricing, portfolio, about, FAQ, and contact. The site follows the
 brief, which costs some search reach:
 
 - **One URL, one title, one meta description.** Separate service pages could each
-  target their own query ("AI healthcare ad videos", "healthcare infographics").
+  target their own query ("AI video dramas for healthcare", "healthcare explainer videos").
   Here the home page title carries both themes, and each chapter uses its own
   descriptive H2 from the guide's page H1s.
 - **Fragments are not indexed separately.** `/#pricing` is the same document as
@@ -209,11 +217,11 @@ brief, which costs some search reach:
 app/                    routes: / (page.tsx), /privacy, /terms, /styleguide (dev only), api/inquiry
   fonts/                trimmed, self-hosted web fonts (see app/fonts/README.md)
 components/chapters/    one component per chapter
-components/interactive/ client islands, hydrated on approach (components/islands/Island.tsx)
-components/{layout,primitives,brand,stage,samples,contact,faq,seo,legal}/
+components/interactive/ the inquiry form island, hydrated on approach (components/islands/Island.tsx)
+components/{layout,primitives,brand,video,contact,faq,seo,legal}/
 content/                all copy, one typed file per chapter
-lib/                    config schema, chapters, pricing, portfolio types, inquiry schema, wayfinding
+lib/                    config schema, chapters, pricing, video slot types, inquiry schema, wayfinding
 site.config.ts          business facts, plans, promo flag, chapter list
-scripts/                prelaunch gate, Lighthouse, screenshots, portfolio media
+scripts/                prelaunch gate, Lighthouse, screenshots
 tests/e2e/              Playwright specs
 ```

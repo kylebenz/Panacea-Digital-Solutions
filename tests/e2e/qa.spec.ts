@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { siteConfig } from "../../site.config";
 
 /*
- * Phase 8 QA: every in-page link and rail tick, scrollspy for every chapter,
+ * QA: every in-page link, header scrollspy,
  * a keyboard-only journey from the top of the page to a sent inquiry, and a
  * reduced-motion snapshot.
  */
@@ -31,24 +31,6 @@ async function expectLanded(page: Page, id: string) {
 }
 
 test.describe("Phase 8 QA", () => {
-  test("every rail tick lands on its chapter, focuses the heading, and marks itself current", async ({
-    page,
-  }, info) => {
-    test.skip(info.project.name !== "desktop", "Rail is desktop-only");
-    await page.goto("/");
-    const rail = page.getByRole("navigation", { name: "Page chapters" });
-    await expect(rail.getByRole("link")).toHaveCount(chapters.length);
-    // Back and forth, so every tick is used in both directions.
-    const order = [...chapters.map((c) => c.id).reverse(), ...chapters.map((c) => c.id)];
-    for (const id of order) {
-      const tick = rail.locator(`a[href="/#${id}"]`);
-      await tick.click();
-      await expectLanded(page, id);
-      await expect(page.locator(`#${id} [data-chapter-heading]`)).toBeFocused();
-      await expect(tick).toHaveAttribute("aria-current", "location");
-    }
-  });
-
   test("every in-page link lands on its target and focuses the heading", async ({ page }, info) => {
     test.setTimeout(180_000);
     await page.goto("/");
@@ -79,30 +61,17 @@ test.describe("Phase 8 QA", () => {
     expect(clicked, `${info.project.name}: visible in-page links exercised`).toBeGreaterThan(20);
   });
 
-  test("scrollspy names the right chapter for every chapter", async ({ page }, info) => {
+  test("header scrollspy marks the nav link for every nav chapter", async ({ page }, info) => {
+    test.skip(info.project.name !== "desktop", "Desktop nav");
     await page.goto("/");
-    const desktop = info.project.name === "desktop";
-    const rail = page.getByRole("navigation", { name: "Page chapters" });
-    const label = page.getByRole("banner").locator("p.text-mono");
+    const nav = page.getByRole("navigation", { name: "Primary" });
     for (const c of [...chapters, ...[...chapters].reverse()]) {
+      if (!("nav" in c) || !c.nav) continue;
       await scrollToChapter(page, c.id);
-      if (desktop) {
-        await expect(rail.locator('a[aria-current="location"]')).toHaveCount(1);
-        await expect(rail.locator(`a[href="/#${c.id}"]`), `rail at #${c.id}`).toHaveAttribute(
-          "aria-current",
-          "location",
-        );
-        if ("nav" in c && c.nav) {
-          await expect(
-            page.getByRole("navigation", { name: "Primary" }).getByRole("link", { name: c.nav }),
-          ).toHaveAttribute("aria-current", "location");
-        }
-      } else if (c.id === "top") {
-        // The opening chapter needs no label: the hero says where you are.
-        await expect(label).toHaveText("");
-      } else {
-        await expect(label, `header label at #${c.id}`).toContainText(`CH ${c.number} · ${c.label}`);
-      }
+      await expect(nav.getByRole("link", { name: c.nav, exact: true }), `nav at #${c.id}`).toHaveAttribute(
+        "aria-current",
+        "location",
+      );
     }
   });
 
@@ -125,7 +94,7 @@ test.describe("Phase 8 QA", () => {
       "Header CTA is hidden below 640px; the mobile CTA bar is covered elsewhere",
     );
     await page.goto("/");
-    const cta = page.getByRole("banner").getByRole("link", { name: "Get Started" });
+    const cta = page.getByRole("banner").getByRole("link", { name: "Get started" });
     // Tab forward until the header CTA has focus, never touching the mouse.
     for (let i = 0; i < 30; i++) {
       await page.keyboard.press("Tab");
@@ -168,7 +137,7 @@ test.describe("Phase 8 QA", () => {
     await page.keyboard.press("Enter");
     await expect(form.getByRole("heading", { level: 3 })).toBeFocused();
 
-    await tabTo("What services or message do you want to promote?");
+    await tabTo("What should your video dramas explain or promote?");
     await page.keyboard.type("Short videos introducing our visit scheduling.");
     // The minimum time-to-submit check needs a few seconds on the form.
     await page.waitForTimeout(3100);
@@ -177,7 +146,7 @@ test.describe("Phase 8 QA", () => {
     await expect(page.getByRole("heading", { name: "Thank you. Your inquiry is on its way." })).toBeFocused();
   });
 
-  test("reduced motion: nothing animates and the hero settles on its final frame", async ({ browser }, info) => {
+  test("reduced motion: nothing animates and the hero is static", async ({ browser }, info) => {
     const context = await browser.newContext({ ...info.project.use, reducedMotion: "reduce" });
     const page = await context.newPage();
     await page.goto(info.project.use.baseURL + "/");

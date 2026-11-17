@@ -3,10 +3,10 @@ import { expect, test } from "@playwright/test";
 test.describe("SEO", () => {
   test("home metadata, canonical, and share images", async ({ page }) => {
     await page.goto("/");
-    await expect(page).toHaveTitle("AI Healthcare Ad Videos & Infographics | Panacea Digital");
+    await expect(page).toHaveTitle("AI Video Dramas for Healthcare Businesses | Panacea Digital");
     await expect(page.locator('meta[name="description"]')).toHaveAttribute(
       "content",
-      "Create awareness for your healthcare business with AI-assisted promotional videos and healthcare infographics. Explore affordable monthly content packages.",
+      "Short, AI-assisted drama videos that explain your healthcare business's services. Scripted, produced, and edited for you through affordable monthly packages.",
     );
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", /\/$/);
     for (const sel of ['meta[property="og:image"]', 'meta[name="twitter:image"]']) {
@@ -22,7 +22,7 @@ test.describe("SEO", () => {
     const raw = await page.locator('script[type="application/ld+json"]').textContent();
     const data = JSON.parse(raw!);
     const types = data["@graph"].map((n: { "@type": string }) => n["@type"]);
-    expect(types).toEqual(["Organization", "WebSite", "Service", "Service", "OfferCatalog", "FAQPage"]);
+    expect(types).toEqual(["Organization", "WebSite", "Service", "OfferCatalog", "FAQPage"]);
     expect(raw).not.toMatch(/"Review"|"AggregateRating"|"LocalBusiness"|web design/i);
     const services = data["@graph"].filter((n: { "@type": string }) => n["@type"] === "Service");
     for (const s of services) expect(s.areaServed.name).toBe("US");
@@ -30,7 +30,7 @@ test.describe("SEO", () => {
     expect(offers.map((o: { price: string }) => o.price)).toEqual(["99.00", "199.00", "549.00"]);
     expect(offers.every((o: { priceCurrency: string }) => o.priceCurrency === "USD")).toBe(true);
     const faq = data["@graph"].find((n: { "@type": string }) => n["@type"] === "FAQPage");
-    expect(faq.mainEntity).toHaveLength(10);
+    expect(faq.mainEntity).toHaveLength(12);
     // No contact details until verified.
     expect(data["@graph"][0].email).toBeUndefined();
   });

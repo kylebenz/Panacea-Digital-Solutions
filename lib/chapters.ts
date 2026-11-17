@@ -18,11 +18,6 @@ export function chapterById(id: string) {
   return chapter;
 }
 
-/** `CH 09 · 00:09:00 — PRICING` */
-export function chapterTimecode(number: string) {
-  return `00:${number}:00`;
-}
-
 export function chapterHref(id: string) {
   return `/#${id}`;
 }

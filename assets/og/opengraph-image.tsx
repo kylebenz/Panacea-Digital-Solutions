@@ -5,7 +5,7 @@ import { hero } from "@/content/hero";
 import { site } from "@/lib/site";
 
 /* Branded share image: paper and ink with the timecode motif (brief §9). */
-export const alt = `${site.name}: ${hero.title}`;
+export const alt = `${site.name}: ${hero.title.lead}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,12 +35,12 @@ export default async function Image() {
       />
       <div style={{ display: "flex", flexDirection: "column", flex: 1, paddingRight: 48 }}>
         <div style={{ display: "flex", fontFamily: "Mono", fontSize: 20, letterSpacing: 2, color: ink2 }}>
-          CH 00 · 00:00:00 — OPENING
+          {hero.eyebrow.toUpperCase()}
         </div>
         <div
           style={{ display: "flex", fontFamily: "Fraunces", fontSize: 68, lineHeight: 1.05, color: ink, marginTop: 36 }}
         >
-          {hero.title}
+          {hero.title.lead}
         </div>
         <div style={{ display: "flex", flex: 1 }} />
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
