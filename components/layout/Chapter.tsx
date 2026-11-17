@@ -14,7 +14,7 @@ export function Chapter({
   lede,
   action,
   children,
-  defer = true,
+  defer = false,
   align = "start",
   layout = "stack",
   className,
@@ -25,7 +25,10 @@ export function Chapter({
   /** Optional button shown to the right of the heading on wide screens. */
   action?: ReactNode;
   children?: ReactNode;
-  /** content-visibility: auto for chapters below the fold. */
+  /**
+   * content-visibility: auto. Off by default: on this page the size guess is far
+   * from the real section heights, so rendering on entry made scrolling hitch.
+   */
   defer?: boolean;
   align?: "start" | "center";
   /** "split": heading on the left, body on the right on large screens. */

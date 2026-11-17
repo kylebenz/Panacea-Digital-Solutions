@@ -33,16 +33,13 @@ export function SiteHeader() {
       )}
     >
       <div
-        className={cn(
-          "page flex items-center gap-4 transition-[height] duration-[var(--dur-2)] ease-[var(--ease-cut)]",
-          condensed ? "h-[var(--header-h-condensed)]" : "h-[var(--header-h)]",
-        )}
+        // Constant height: animating it would re-lay out the whole page on every
+        // frame as scrolling starts. Condensing only adds the hairline.
+        className="page flex h-[var(--header-h-condensed)] items-center gap-4"
       >
         <a href={chapterHref("top")} className="shrink-0 rounded-xs">
           <span className="sr-only">{globalCopy.homeLabel}</span>
-          {/* On small screens the condensed header drops to the monogram so the
-              current chapter label has room. */}
-          <Logo subline={!condensed} wordmarkClassName={condensed ? "max-sm:hidden" : undefined} />
+          <Logo />
         </a>
 
         <span className="flex-1" aria-hidden="true" />

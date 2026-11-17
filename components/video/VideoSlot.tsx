@@ -13,7 +13,7 @@ function PlayGlyph({ small }: { small?: boolean }) {
     <span
       aria-hidden="true"
       className={cn(
-        "grid place-items-center rounded-full bg-paper/12 shadow-[inset_0_0_0_1px_rgb(245_242_236/0.35)] backdrop-blur-[2px]",
+        "grid place-items-center rounded-full bg-paper/12 shadow-[inset_0_0_0_1px_rgb(245_242_236/0.35)]",
         small ? "h-10 w-10" : "h-14 w-14",
       )}
     >

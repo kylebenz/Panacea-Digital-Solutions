@@ -678,6 +678,10 @@
   position: relative;
   scroll-margin-top: calc(var(--header-h-condensed) + 1rem);
 }
+/* The opening section starts right under the header, so "back to top" lands at 0. */
+#top {
+  scroll-margin-top: var(--header-h-condensed);
+}
 
 /* Below-the-fold chapters skip rendering work until approached.
    Anchor accuracy is handled in lib/wayfinding/navigate.ts. */
@@ -834,9 +838,7 @@
 /* Empty video slot: a dark frame with a play glyph and a soft scan of the
    brand gradient along the bottom edge. */
 .video-placeholder {
-  background:
-    radial-gradient(120% 80% at 50% 0%, rgb(94 200 200 / 0.14), transparent 60%),
-    linear-gradient(180deg, var(--color-ink-raised), var(--color-ink));
+  background: linear-gradient(180deg, #1a3540, var(--color-ink) 70%);
 }
 .video-placeholder::after {
   content: "";

@@ -3,16 +3,14 @@
 import { useSyncExternalStore } from "react";
 
 /*
- * One shared scroll/visibility store for the header scrollspy, chapter rail,
- * mobile chapter label, and mobile CTA bar. Observers are created lazily on
+ * One shared scroll/visibility store for the header scrollspy, header
+ * hairline, and mobile CTA bar. Observers are created lazily on
  * the first subscriber and torn down with the last, so pages without
  * chapters (privacy, terms) pay nothing.
  */
 
 export type WayfindingState = {
   activeId: string | null;
-  /** 0–1 scroll progress through the whole document. */
-  progress: number;
   condensed: boolean;
   heroVisible: boolean;
   contactVisible: boolean;
@@ -20,7 +18,6 @@ export type WayfindingState = {
 
 const initialState: WayfindingState = {
   activeId: null,
-  progress: 0,
   condensed: false,
   heroVisible: true,
   contactVisible: false,
@@ -52,19 +49,15 @@ function start() {
   let frame = 0;
   const measure = () => {
     frame = 0;
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const y = window.scrollY;
-    setState({
-      progress: max > 0 ? Math.min(1, Math.max(0, y / max)) : 0,
-      condensed: y > 8,
-    });
+    // Only scrollY: reading layout (e.g. scrollHeight) here would force a
+    // synchronous layout on every scroll frame.
+    setState({ condensed: window.scrollY > 8 });
   };
   const onScroll = () => {
     if (!frame) frame = requestAnimationFrame(measure);
   };
   measure();
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
 
   const visible = new Set<string>();
   const activeObserver = new IntersectionObserver(
@@ -99,7 +92,6 @@ function start() {
   return () => {
     if (frame) cancelAnimationFrame(frame);
     window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("resize", onScroll);
     activeObserver.disconnect();
     edgeObserver.disconnect();
     state = initialState;
