@@ -4,10 +4,7 @@ import { cn } from "@/lib/cn";
 export function ConceptBadge({ className }: { className?: string }) {
   return (
     <span
-      className={cn(
-        "text-mono inline-flex items-center gap-1.5 rounded-xs bg-teal px-2 py-1 text-paper",
-        className,
-      )}
+      className={cn("text-mono inline-flex items-center gap-1.5 rounded-xs bg-teal px-2 py-1 text-paper", className)}
     >
       <svg aria-hidden="true" viewBox="0 0 10 10" className="h-2.5 w-2.5" fill="none">
         <rect

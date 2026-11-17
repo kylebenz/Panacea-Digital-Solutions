@@ -49,8 +49,10 @@
   --ease-cut: cubic-bezier(0.22, 1, 0.36, 1);
 
   --radius-xs: 2px;
-  --radius-phone: 28px;
-  --radius-screen: 20px;
+  --radius-sm: 8px;
+  --radius-card: 14px;
+  --radius-phone: 34px;
+  --radius-screen: 26px;
 }
 
 /* Tone-aware aliases: primitives use these so they adapt to the chapter
@@ -81,19 +83,13 @@
   --dur-3: 600ms;
   --stagger: 60ms;
 
-  --page-max: 1360px;
+  --page-max: 1040px;
   --page-margin: clamp(1rem, 4vw, 3rem);
   --gutter: clamp(1rem, 2vw, 1.5rem);
-  --chapter-pad: clamp(5rem, 10vw, 9rem);
+  --chapter-pad: clamp(4.5rem, 8vw, 7rem);
   --header-h: 4.5rem;
   --header-h-condensed: 3.5rem;
   --rail-gutter: 0px;
-}
-
-@media (min-width: 64rem) {
-  :root {
-    --rail-gutter: 3.5rem;
-  }
 }
 
 :root,
@@ -258,20 +254,20 @@
 
 @utility text-display-xl {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.2vw, 4.75rem);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  font-weight: 400;
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 500;
   font-optical-sizing: auto;
   text-wrap: balance;
 }
 
 @utility text-display-l {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.6vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  font-weight: 400;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 500;
   font-optical-sizing: auto;
   text-wrap: balance;
 }
@@ -355,8 +351,8 @@
     justify-content: center;
     gap: 0.625rem;
     min-height: 2.75rem;
-    padding: 0.625rem 1.125rem;
-    border-radius: var(--radius-xs);
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--radius-sm);
     font-family: var(--font-sans);
     font-size: 0.9375rem;
     font-weight: 600;
@@ -806,11 +802,49 @@
   }
 }
 
-/* Filmstrip perforations for the sample strip. */
-.perforations {
-  height: 6px;
-  background-image: repeating-linear-gradient(90deg, var(--tone-line-strong) 0 10px, transparent 10px 18px);
-  opacity: 0.55;
+/* ------------------------------------------------------------------
+   Cards, eyebrows, and the video placeholder
+   ------------------------------------------------------------------ */
+
+/* Small accent label above every section heading. */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tone-accent);
+}
+
+/* Rounded card in the tone it sits in: a lifted field colour and a hairline.
+   In the components layer so utilities (e.g. bg-[#fff]) can override it. */
+@layer components {
+  .card {
+    border-radius: var(--radius-card);
+    background-color: var(--tone-field);
+    box-shadow: inset 0 0 0 1px var(--tone-line);
+  }
+  [data-tone="ink"] .card,
+  .card[data-tone="ink"] {
+    background-color: var(--color-ink-raised);
+  }
+}
+
+/* Empty video slot: a dark frame with a play glyph and a soft scan of the
+   brand gradient along the bottom edge. */
+.video-placeholder {
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgb(94 200 200 / 0.14), transparent 60%),
+    linear-gradient(180deg, var(--color-ink-raised), var(--color-ink));
+}
+.video-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background-image: var(--gradient-brand);
+  opacity: 0.7;
 }
 
 @utility text-statement {

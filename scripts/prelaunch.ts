@@ -8,7 +8,7 @@
  * Hard failures
  *   - any "[VERIFY" in rendered output
  *   - an invalid or incomplete promo object (and the rest of site.config)
- *   - a client portfolio item without written permission on file
+ *   - a client video slot without written permission on file
  *   - more or fewer than one H1 on any route
  *   - duplicate or missing chapter ids, or chapters out of config order
  *   - any in-page nav, rail, or CTA link that doesn't resolve to an element
@@ -28,7 +28,8 @@ import { spawn } from "node:child_process";
 import { chromium, type Page } from "playwright";
 import { siteConfigSchema } from "@/lib/config-schema";
 import { siteConfig } from "@/site.config";
-import { portfolioItems } from "@/content/portfolio-items";
+import { work } from "@/content/work";
+import { breakdowns } from "@/content/breakdowns";
 import { seo } from "@/content/seo";
 
 const failures: string[] = [];
@@ -52,7 +53,8 @@ const promo = siteConfig.promo as {
 if (promo.enabled && [promo.regularPrices, promo.startDate, promo.endDate, promo.terms].some((v) => v == null)) {
   fail("Promo is enabled but regular prices, dates, or terms are missing.");
 }
-for (const item of portfolioItems as Array<{
+const videoSlots = [...work.columns.flat(), ...breakdowns.items.flatMap((item) => item.episodes)];
+for (const item of videoSlots as Array<{
   slug: string;
   status: string;
   permission?: { onFile?: boolean; clientName?: string; approvedAt?: string };
@@ -61,7 +63,7 @@ for (const item of portfolioItems as Array<{
     item.status === "client" &&
     !(item.permission?.onFile && item.permission.clientName && item.permission.approvedAt)
   ) {
-    fail(`Portfolio item "${item.slug}" is client work without written permission on file.`);
+    fail(`Video slot "${item.slug}" is client work without written permission on file.`);
   }
 }
 

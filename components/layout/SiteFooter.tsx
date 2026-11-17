@@ -15,71 +15,65 @@ async function copyrightYear() {
 export async function SiteFooter() {
   const year = await copyrightYear();
   const { email, legalName } = site.contact;
-  const lastChapter = site.chapters[site.chapters.length - 1];
+  const link = "inline-flex min-h-6 items-center text-paper-dim no-underline hover:text-paper hover:underline";
 
   return (
-    <footer data-tone="paper" className="relative border-t border-rule pt-20 pb-28 lg:pb-12">
+    <footer data-tone="ink" className="relative pt-16 pb-28 lg:pb-12">
       <div className="page">
-        <div className="grid-12 gap-y-14">
-          <div className="col-span-12 lg:col-span-7">
-            <Logo />
-            <p className="text-display-l mt-10 max-w-[16ch]">{site.tagline}</p>
+        <div className="flex flex-col gap-12 md:flex-row md:justify-between">
+          <div>
+            <Logo subline={false} />
+            <p className="mt-5 font-display text-[1.25rem] font-medium text-accent">{site.tagline}</p>
           </div>
 
-          <nav aria-label={globalCopy.footerNavLabel} className="col-span-6 sm:col-span-4 lg:col-span-2 lg:col-start-9">
-            <p className="text-mono mb-4 text-fg-muted">Chapters</p>
-            <ul className="grid gap-1">
-              {navChapters.map((chapter) => (
-                <li key={chapter.id}>
-                  <a
-                    href={chapterHref(chapter.id)}
-                    className="inline-flex min-h-8 items-center no-underline hover:underline"
-                  >
-                    {chapter.nav}
+          <div className="grid gap-8">
+            <nav aria-label={globalCopy.footerNavLabel}>
+              <p className="text-mono mb-3 text-fg-muted">{footer.exploreLabel}</p>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2 text-small">
+                {navChapters.map((chapter) => (
+                  <li key={chapter.id}>
+                    <a href={chapterHref(chapter.id)} className={link}>
+                      {chapter.nav}
+                    </a>
+                  </li>
+                ))}
+                <li>
+                  <a href={chapterHref("contact")} className={link}>
+                    {globalCopy.getStarted}
                   </a>
                 </li>
-              ))}
-              <li>
-                <a
-                  href={chapterHref("contact")}
-                  className="inline-flex min-h-8 items-center no-underline hover:underline"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </nav>
-
-          <div className="col-span-6 sm:col-span-4 lg:col-span-2">
-            <p className="text-mono mb-4 text-fg-muted">Contact</p>
-            <p className="break-words">
-              {email ? <a href={`mailto:${email}`}>{email}</a> : <VerifyMark>contact email</VerifyMark>}
-            </p>
-            <p className="text-mono mt-8 mb-4 text-fg-muted">Legal</p>
-            <ul className="grid gap-1">
-              {footer.legalLinks.map((link) => (
-                <li key={link.href}>
-                  <a href={link.href} className="inline-flex min-h-8 items-center no-underline hover:underline">
-                    {link.label}
+              </ul>
+            </nav>
+            <div>
+              <p className="text-mono mb-3 text-fg-muted">{footer.contactLabel}</p>
+              <p className="text-small break-words">
+                {email ? (
+                  <a href={`mailto:${email}`} className={link}>
+                    {email}
                   </a>
-                </li>
-              ))}
-            </ul>
+                ) : (
+                  <VerifyMark>contact email</VerifyMark>
+                )}
+              </p>
+            </div>
           </div>
         </div>
 
-        <p className="text-small measure mt-16 text-fg-muted">{footer.disclaimer}</p>
+        <p className="text-small measure mt-12 text-fg-muted">{footer.disclaimer}</p>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-rule pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-small text-fg-muted">
-            © {year} {legalName ?? <VerifyMark>legal entity name</VerifyMark>}
+        <div className="mt-8 flex flex-col gap-3 border-t border-rule pt-6 text-[0.75rem] text-fg-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            © {year} {legalName ?? <VerifyMark>legal entity name</VerifyMark>}. {footer.rights}
           </p>
-          <p className="text-mono flex items-center gap-3 text-fg-muted" aria-hidden="true">
-            <span>00:{lastChapter.number}:59</span>
-            <span className="h-px w-10 bg-current" />
-            <span>{footer.endMark}</span>
-            <span className="inline-block h-2.5 w-2.5 bg-remedy" />
-          </p>
+          <ul className="flex gap-5">
+            {footer.legalLinks.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className={link}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

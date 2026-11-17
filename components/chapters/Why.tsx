@@ -1,42 +1,27 @@
 import { why } from "@/content/why";
 import { Chapter } from "@/components/layout/Chapter";
+import { Button } from "@/components/primitives/Button";
 
-/*
- * 01 · The guide's paragraph set as one large editorial statement. The five
- * stages it names are annotated in the diagram language — hairline
- * underline plus a numbered superscript — and repeated as a measured ruler.
- */
+/* 02 · Why drama works (ink band). */
 export function Why() {
-  const steps = why.parts.filter((part) => "step" in part);
   return (
-    <Chapter id="why" title={why.title} layout="split">
-      <p className="text-statement reveal-mask">
-        {why.parts.map((part, i) => {
-          if (!("step" in part)) return <span key={i}>{part.text}</span>;
-          const n = steps.indexOf(part) + 1;
-          return (
-            <span key={i} className="underline decoration-teal decoration-1 underline-offset-[0.2em]">
-              {part.text}
-              <sup
-                aria-hidden="true"
-                className="ml-0.5 align-super font-mono text-[0.75rem] font-medium tracking-normal text-teal"
-              >
-                {String(n).padStart(2, "0")}
-              </sup>
-            </span>
-          );
-        })}
-      </p>
-
-      <ol className="mt-14 grid grid-cols-5 border-t border-rule-strong" aria-hidden="true">
-        {steps.map((part, i) => (
-          <li key={part.step} className="relative pt-4">
-            <span className="absolute -top-px left-0 h-3 w-px bg-rule-strong" />
-            <span className="text-mono block text-teal">{String(i + 1).padStart(2, "0")}</span>
-            <span className="text-mono mt-1 block text-fg">{part.step}</span>
+    <Chapter id="why" title={why.title} lede={<p>{why.body}</p>}>
+      <p className="text-h3 mt-6 max-w-[40ch]">{why.kicker}</p>
+      <ol className="mt-12 grid gap-4 md:grid-cols-3">
+        {why.steps.map((step, i) => (
+          <li key={step.title} className="card p-6">
+            <p className="text-mono text-accent">{String(i + 1).padStart(2, "0")}</p>
+            <h3 className="text-h3 mt-2">{step.title}</h3>
+            <p className="text-small mt-2 text-fg-muted">{step.text}</p>
           </li>
         ))}
       </ol>
+      <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-small text-fg-muted">{why.note}</p>
+        <Button href={why.cta.href} arrow className="self-start sm:self-auto">
+          {why.cta.label}
+        </Button>
+      </div>
     </Chapter>
   );
 }

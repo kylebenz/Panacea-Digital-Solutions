@@ -1,6 +1,8 @@
-// Guide §12 — FAQ (verbatim). `links` marks phrases inside an answer that link
-// in-page (guide §16: FAQ → Pricing / Contact). Per Checkpoint 1 decision D5,
-// "pricing page" stays verbatim and links to #pricing.
+import { siteConfig } from "@/site.config";
+
+// FAQ. Answers adapted from guide §12 for the AI video drama service;
+// guarantee, revision, client-input, specialty, and patient-story answers are
+// verbatim. `links` marks phrases inside an answer that link in-page.
 export type FaqItem = {
   id: string;
   question: string;
@@ -8,22 +10,18 @@ export type FaqItem = {
   links?: Array<{ text: string; href: string }>;
 };
 
+const [starter, growth, scale] = siteConfig.plans;
+
 export const faq = {
-  title: "Frequently Asked Questions",
-  filterLabel: "Filter questions",
-  filterPlaceholder: "Try “revision” or “AI”",
-  count: (shown: number, total: number) => `Showing ${shown} of ${total} questions`,
-  empty: "No questions match. Try another word, or ask us directly.",
-  copyLink: (q: string) => `Copy link to “${q}”`,
-  copied: "Link copied",
-  // Guide §5: FAQ page CTA.
-  cta: { label: "Ask a Question", href: "/#contact" },
+  title: "Questions, answered.",
+  more: "Something else on your mind?",
+  cta: { label: "Ask a question", href: "/#contact" },
   items: [
     {
       id: "what-do-you-create",
       question: "What does Panacea Digital Solutions create?",
       answer:
-        "We create AI-assisted short-form advertisement videos and infographic images for healthcare businesses. Our process includes content planning, scriptwriting, production, editing, revision, and delivery.",
+        "Short, AI-assisted drama videos for healthcare businesses: scripted stories with AI-generated characters that explain your services. Our process includes story planning, scriptwriting, production, editing, revision, and delivery.",
     },
     {
       id: "who-are-your-services-for",
@@ -32,11 +30,22 @@ export const faq = {
         "Our initial focus is healthcare startups and small healthcare businesses that need promotional content to explain their services and build awareness.",
     },
     {
-      id: "whats-in-the-packages",
-      question: "What is included in the monthly packages?",
+      id: "do-i-have-to-film",
+      question: "Do I have to film anything?",
       answer:
-        "Each package includes the stated number of AI-assisted advertisement videos and infographic images, with one revision per content item. Check the pricing page for the current package details.",
-      links: [{ text: "pricing page", href: "/#pricing" }],
+        "No. Every scene, character, and voice is produced with AI. You provide information and feedback; there is no shoot day.",
+    },
+    {
+      id: "are-the-people-real",
+      question: "Are the people in the videos real?",
+      answer:
+        "No. The characters are AI-generated, and we never present them as your real staff, patients, or clients.",
+    },
+    {
+      id: "how-many-videos",
+      question: "How many videos do I get?",
+      answer: `Starter includes ${starter.videos} video dramas a month, Growth includes ${growth.videos}, and Scale includes ${scale.videos}. Every video includes one revision. See the pricing section for current package details.`,
+      links: [{ text: "pricing section", href: "/#pricing" }],
     },
     {
       id: "do-you-guarantee-results",
@@ -71,13 +80,13 @@ export const faq = {
       id: "how-do-you-use-ai",
       question: "How do you use AI?",
       answer:
-        "AI-assisted tools may be used during creative production. Outputs are reviewed for clarity, quality, and potential misleading implications. Specific tools and methods can vary by project.",
+        "We use AI tools to generate characters, voices, scenes, and settings. Outputs are reviewed for clarity, quality, and potential misleading implications. Specific tools and methods can vary by project.",
     },
     {
       id: "how-do-i-get-started",
       question: "How do I get started?",
       answer:
-        "Review the monthly packages and send an inquiry describing your business, service, audience, and content needs.",
+        "Review the monthly packages and send an inquiry describing your business, service, audience, and the story you want to tell.",
       links: [
         { text: "Review the monthly packages", href: "/#pricing" },
         { text: "send an inquiry", href: "/#contact" },

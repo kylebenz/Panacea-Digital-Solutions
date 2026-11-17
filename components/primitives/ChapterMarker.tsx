@@ -1,4 +1,3 @@
-import { chapterTimecode } from "@/lib/chapters";
 import { cn } from "@/lib/cn";
 
 /** `CH 09 · 00:09:00 — PRICING`, preceded by a small frame tick. */
@@ -12,7 +11,7 @@ export function ChapterMarker({ number, label, className }: { number: string; la
         <span className="text-fg">CH {number}</span>
         <span aria-hidden="true"> · </span>
         <span className="sr-only">, timecode </span>
-        {chapterTimecode(number)}
+        {`00:${number}:00`}
         <span aria-hidden="true"> — </span>
         <span className="sr-only">, </span>
         {label}

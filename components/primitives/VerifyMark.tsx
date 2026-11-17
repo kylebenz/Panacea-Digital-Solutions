@@ -9,7 +9,7 @@ export function VerifyMark({ children, className }: { children?: string; classNa
     <span
       className={cn(
         "inline rounded-xs border border-dashed border-current px-1 py-px font-mono text-[0.8125em] font-medium tracking-normal normal-case",
-        "bg-[repeating-linear-gradient(135deg,var(--color-mist)_0_6px,transparent_6px_12px)] text-ink",
+        "bg-mist bg-[repeating-linear-gradient(135deg,rgb(255_255_255/0.55)_0_6px,transparent_6px_12px)] text-ink",
         className,
       )}
     >

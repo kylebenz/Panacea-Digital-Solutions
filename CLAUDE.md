@@ -1,8 +1,14 @@
 # Panacea Digital Solutions — working rules
 
-Single-page marketing site for Panacea Digital Solutions (AI-assisted healthcare
-advertisement videos and healthcare infographic images for U.S. healthcare
-startups and small healthcare businesses).
+Single-page marketing site for Panacea Digital Solutions (short, AI-assisted video
+dramas for U.S. healthcare startups and small healthcare businesses).
+
+**Service change (2026-11-17, owner's request):** infographics were dropped; the
+business is AI video dramas only. The page layout follows the owner's reference
+(hero + phone, video wall, dark "why" band, monthly process, breakdowns, about,
+organic/paid/both, FAQ, pricing, fit check, form). Where `docs/brand-guide.*` still
+describes infographics or the old copy, this change wins; the rest of the guide
+(claims, compliance, pricing, disclaimers) still applies.
 
 - **Spec:** `BUILD_BRIEF.md` (visual identity, interaction, architecture, engineering).
 - **Source of truth for copy, metadata, pricing, claims, compliance:**
@@ -14,8 +20,9 @@ startups and small healthcare businesses).
 
 ## Guardrails (brief §1) — violating any of these is a failed build
 
-1. **Scope.** Panacea sells two services only: AI-assisted healthcare ad videos and
-   healthcare infographic images. Web design must not appear as a service anywhere —
+1. **Scope.** Panacea sells one service: short, AI-assisted video dramas for healthcare
+   businesses. Infographics, posting, and ad management are not offered. Web design
+   must not appear as a service anywhere —
    nav, copy, schema, footer, metadata.
 2. **No outcome promises.** Never guarantee virality, reach, leads, appointments, sales,
    patients, revenue, medical outcomes, rankings, or timelines.
@@ -24,10 +31,10 @@ startups and small healthcare businesses).
    invented statistics; no case studies or campaign results.
 4. **Portfolio honesty.** Fictional or speculative work carries a visible
    **"Concept Sample"** label. Real client work appears only with written permission,
-   enforced by the `PortfolioItem` discriminated union (`status: 'client'` requires
+   enforced by the `VideoSlot` discriminated union in `lib/work.ts` (`status: 'client'` requires
    `permission: { onFile: true; clientName; approvedAt }`).
-5. **Pricing.** Starter $99/mo (4 videos + 4 infographics), Growth $199/mo (10 + 10),
-   Scale $549/mo (30 + 30); every plan includes 1 revision per content item. Prices come
+5. **Pricing.** Starter $99/mo (4 video dramas), Growth $199/mo (10), Scale $549/mo (30);
+   every plan includes 1 revision per video. Prices come
    only from `site.config.ts`. **The "50% off" offer is ON at the owner's request**
    (guide §9: current prices are 50% off, so regular prices are $198 / $398 / $1,098).
    Each card shows a red "50% OFF" tag and its regular price in plain text. Still: no
@@ -60,8 +67,9 @@ to the register in `docs/phase-0-plan.md` §5. `npm run prelaunch` fails while a
 - `site.config.ts` — plain data: business facts, plans, promo flag, chapter list
   (order, ids, labels, tone). Validated by `lib/config-schema.ts` via `lib/site.ts`
   (server only) so zod never ships to the client.
-- `lib/chapters.ts` — client-safe chapter helpers; header nav, chapter rail, footer nav,
+- `lib/chapters.ts` — client-safe chapter helpers; header nav, section eyebrows, footer nav,
   and mobile menu are all generated from the one chapter list.
+- `content/work.ts`, `content/breakdowns.ts` — video slots (placeholders until `media` is set).
 - `content/*.ts` — one typed copy file per chapter. Components never hardcode copy.
   Guide copy is verbatim; only microcopy (labels, states, errors, alt text, captions,
   demo content) is written here, in a plain, specific, calm voice.

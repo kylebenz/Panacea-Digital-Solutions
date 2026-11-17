@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { hero } from "@/content/hero";
-import { why } from "@/content/why";
 import { pricing } from "@/content/pricing";
 import { chapters } from "@/lib/chapters";
 import { colorTokens, contrastPairs, contrastRatio, minimumFor, tokenValue } from "@/lib/tokens";
@@ -12,7 +11,7 @@ import { ChapterMarker } from "@/components/primitives/ChapterMarker";
 import { Timecode } from "@/components/primitives/Timecode";
 import { AnnotatedCard } from "@/components/primitives/AnnotatedCard";
 import { PhoneFrame } from "@/components/primitives/PhoneFrame";
-import { InfographicFrame } from "@/components/primitives/InfographicFrame";
+import { VideoSlot } from "@/components/video/VideoSlot";
 import { ConceptBadge } from "@/components/primitives/ConceptBadge";
 import { TagChip } from "@/components/primitives/TagChip";
 import { VerifyMark } from "@/components/primitives/VerifyMark";
@@ -324,7 +323,7 @@ export default function StyleguidePage() {
                   Videos
                 </button>
                 <button type="button" className="chip" aria-pressed="false">
-                  Infographics
+                  Series
                 </button>
               </div>
             </div>
@@ -335,18 +334,18 @@ export default function StyleguidePage() {
       <Section id="type" title="Type scale" tone="paper-2">
         <dl className="grid gap-10">
           <div>
-            <dt className="text-mono mb-2 text-fg-muted">display-xl · Fraunces · clamp(2.5rem, 5.2vw, 4.75rem) · H1</dt>
-            <dd className="text-display-xl max-w-[18ch]">{hero.title}</dd>
+            <dt className="text-mono mb-2 text-fg-muted">display-xl · Fraunces · clamp(2.5rem, 5.4vw, 4.5rem) · H1</dt>
+            <dd className="text-display-xl max-w-[18ch]">{hero.title.lead}</dd>
           </div>
           <div>
-            <dt className="text-mono mb-2 text-fg-muted">display-l · Fraunces · clamp(2rem, 3.6vw, 3.25rem) · H2</dt>
+            <dt className="text-mono mb-2 text-fg-muted">display-l · Fraunces · clamp(2rem, 3.8vw, 3.25rem) · H2</dt>
             <dd className="text-display-l max-w-[24ch]">{pricing.title}</dd>
           </div>
           <div>
             <dt className="text-mono mb-2 text-fg-muted">
               display-m · Fraunces 350 · clamp(1.625rem, 2.6vw, 2.375rem) · statements
             </dt>
-            <dd className="text-display-m max-w-[40ch]">{why.body.split(". ")[0]}.</dd>
+            <dd className="text-display-m max-w-[40ch]">{hero.title.accent}</dd>
           </div>
           <div>
             <dt className="text-mono mb-2 text-fg-muted">h3 · Instrument Sans 600</dt>
@@ -432,23 +431,25 @@ export default function StyleguidePage() {
             </PhoneFrame>
           </div>
           <div>
-            <SubHead>Infographic frame · 4:5</SubHead>
-            <InfographicFrame ratio="4:5">
-              <div className="grid h-full content-start gap-3 bg-mist p-5">
-                <p className="text-mono text-teal">Concept</p>
-                <p className="font-display text-xl leading-tight">
-                  Questions to ask before choosing a home care provider
-                </p>
-              </div>
-            </InfographicFrame>
+            <SubHead>Video slot · placeholder</SubHead>
+            <VideoSlot
+              slot={{
+                slug: "sg-slot",
+                title: "First Visit Nerves",
+                subtitle: "Pediatric dental practice",
+                status: "concept",
+                media: null,
+              }}
+              placeholderLabel="Video coming soon"
+            />
           </div>
           <div>
-            <SubHead>Infographic frame · 1:1</SubHead>
-            <InfographicFrame ratio="1:1">
-              <div className="grid h-full place-items-center bg-mist p-5">
-                <Callout n={1} active />
-              </div>
-            </InfographicFrame>
+            <SubHead>Card · eyebrow</SubHead>
+            <div className="card p-6">
+              <p className="eyebrow">How it works</p>
+              <p className="text-h3 mt-2">Scripting</p>
+              <Callout n={1} active />
+            </div>
           </div>
         </div>
       </Section>
@@ -473,7 +474,7 @@ export default function StyleguidePage() {
             Videos
           </button>
           <button type="button" className="chip" data-preview="hover" aria-pressed="false">
-            Infographics (hover)
+            Series (hover)
           </button>
         </div>
         <p className="mt-8 measure">
@@ -483,8 +484,8 @@ export default function StyleguidePage() {
 
       <Section id="logo" title="Logo (placeholder)">
         <p className="measure mb-8 text-fg-muted">
-          SVG wordmark and a monogram “P” built from a 9:16 frame and a square — video plus infographic. No medical
-          symbols. Replaced when a real logo is supplied.
+          SVG wordmark and a monogram “P” built from a 9:16 frame and a square. No medical symbols. Replaced when a real
+          logo is supplied.
         </p>
         <div className="grid gap-4 md:grid-cols-3">
           <div className="grid place-items-center border border-rule-strong p-10">

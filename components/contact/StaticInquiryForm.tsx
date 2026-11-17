@@ -109,12 +109,7 @@ export function StaticOutcomes() {
   return (
     <>
       {panels.map((p) => (
-        <div
-          key={p.id}
-          id={p.id}
-          className="inquiry-outcome mb-10 border-l-2 border-aqua py-2 pl-5"
-          tabIndex={-1}
-        >
+        <div key={p.id} id={p.id} className="inquiry-outcome mb-10 border-l-2 border-aqua py-2 pl-5" tabIndex={-1}>
           <p className="text-h3">{p.title}</p>
           <p className="measure mt-2 text-fg-muted">{p.body}</p>
         </div>

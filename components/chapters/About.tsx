@@ -1,38 +1,31 @@
 import { about } from "@/content/about";
+import { site } from "@/lib/site";
 import { Chapter } from "@/components/layout/Chapter";
-import { Button } from "@/components/primitives/Button";
 import { VerifyMark } from "@/components/primitives/VerifyMark";
 
-/* 10 · About — guide copy and the "Our commitments" ledger (absorbs Clear expectations). */
+/* 05 · About — heading left, story and plain facts right. */
 export function About() {
+  const counts = site.plans.map((plan) => plan.videos);
+  const facts = [about.facts.videos(Math.min(...counts), Math.max(...counts)), about.facts.revision, about.facts.cast];
   return (
     <Chapter id="about" title={about.title} layout="split">
-      <p className="text-statement reveal-mask">{about.intro}</p>
-      <p className="text-body-l measure mt-8 text-fg-muted">{about.body}</p>
-      <p className="text-small mt-6">
-        <VerifyMark>{about.verifyDetails}</VerifyMark>
-      </p>
-
-      <div className="mt-16">
-        <h3 className="text-display-m">{about.commitments.title}</h3>
-        <ol className="mt-6 border-t border-rule-strong">
-          {about.commitments.items.map((item, i) => (
-            <li
-              key={item.label}
-              className="reveal-wipe grid gap-x-4 gap-y-1 border-b border-rule py-4 sm:grid-cols-[2.5rem_9rem_1fr] sm:items-baseline"
-            >
-              <span className="text-mono text-fg-muted">{String(i + 1).padStart(2, "0")}</span>
-              <span className="text-mono">{item.label}</span>
-              <span className="text-body-l">{item.text}</span>
+      <div className="grid content-start gap-4 lg:pt-8">
+        {about.body.map((paragraph) => (
+          <p key={paragraph} className="text-fg-muted">
+            {paragraph}
+          </p>
+        ))}
+        <p className="text-small">
+          <VerifyMark>{about.verifyDetails}</VerifyMark>
+        </p>
+        <ul className="mt-2 flex flex-wrap gap-3">
+          {facts.map((fact) => (
+            <li key={fact.label} className="card bg-[#fff] px-4 py-3">
+              <p className="font-display text-[1.375rem] leading-none font-medium text-accent">{fact.value}</p>
+              <p className="mt-1 text-[0.75rem] text-fg-muted">{fact.label}</p>
             </li>
           ))}
-        </ol>
-      </div>
-
-      <div className="mt-12">
-        <Button href={about.cta.href} arrow>
-          {about.cta.label}
-        </Button>
+        </ul>
       </div>
     </Chapter>
   );
